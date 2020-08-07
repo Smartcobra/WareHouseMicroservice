@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+	
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header text-center bg-primary">
+				<h1>WELCOME TO ORDER METHOD REGISTER</h1>
+			</div>
+			<!-- Card body Starts -->
+			<div class="card-body">
+				<form id="orderMethodForm" th:action="@{/ordermethod/save}"
+					method="POST" th:object="${orderMethod}">
+					<!-- ROW #1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="orderMOde">OrderMode</label>
+						</div>
+						<div class="col-1">
+							<input type="radio" th:field="*{orderMode}" value="Sale" /> Sale
+						</div>
+						<div class="col-2">
+							<input type="radio" th:field="*{orderMode}" value="Purchase" />
+							Purchase
+						</div>
+						<div class="col-6">
+							<span id="orderModeError"></span>
+						</div>
+					</div>
+					<br>
+					<!--ROW #2  -->
+					<div class="row">
+						<div class="col-2">
+							<label for="OrderCode">Order Code</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{orderCode}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="orderCodeError"></span>
+						</div>
+					</div>
+					<br>
+					<!--ROW #3  -->
+					<div class="row">
+						<div class="col-2">
+							<label for="orderType"> Order Type</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{orderType}" class="form-control">
+								<option value="">--SELECT--</option>
+								<option value="FIFO">FIFO</option>
+								<option value="LIFO">LIFO</option>
+								<option value="FCFO">FCFO</option>
+								<option value="FEFO">FEFO</option>
+							</select>
+						</div>
+						<div class="col-4">
+							<span id="orderTypeError"></span>
+						</div>
+					</div>
+					<br>
+					<!--ROW #4  -->
+					<div class="row">
+						<div class="col-2">
+							<label for="orderAccept"> Order Accept</label>
+						</div>
+						<div class="col-2">
+							<input type="checkbox" th:filed="*{orderAcpt}"
+								value="Multi-Model"> Multi-Model
+						</div>
+						<div class="col-2">
+							<input type="checkbox" th:field="*{orderAcpt}"
+								value="Accept Return">Accept Return
+						</div>
+						<div class="col-4">
+							<span id="orderAcceptError"></span>
+						</div>
+					</div>
+					<!--ROW #5  -->
+					<br>
+					<div class="row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-4">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+					<!--ROW #6  -->
+					<br>
+					<div class="row">
+						<div class="col-4">
+							<input type="submit" class="btn btn-success"
+								value="Create Order Method">
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div th:if="${message!=null}">
+				<div class="card-footer bg-primary text-white text-center">
+					<b><span th:text="${message}"></span></b>
+				</div>
+			</div>
+			<!-- card Footer End -->
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#orderModeError").hide();
+							$("#orderCodeError").hide();
+							$("#orderTypeError").hide();
+							$("#orderAcceptError").hide();
+							$("#descriptionError").hide();
+
+							var orderModeError = false;
+							var orderCodeError = false;
+							var orderTypeError = false;
+							var orderAcceptError = false;
+							var descriptionError = false;
+
+							$('input[type="radio"][name="orderMode"]').change(function(){
+								validate_orderMode();
+							});
+
+							$("#orderCode").keyup(
+									function() {
+										$("#orderCode").val(
+												$("#orderCode").val()
+														.toUpperCase());
+										validate_orderCode();
+									});
+
+							$("#orderType").change(function() {
+								 validate_orderType();
+							});
+
+							 $('input[type="chekbox"][name="orderAcpt"]').change(function () {
+								 validate_orderAcpt();
+					            });
+
+							$("#description").keyup(function() {
+								validate_description();
+							});
+							
+							//------------validate_orderMode----------//
+							 function validate_orderMode() {
+               				 var len = $('input[type="radio"][name="orderMode"]:checked').length;
+                			if (len == 0) {
+                  			  $("#orderModeError").show();
+                   				 $("#orderModeError").html("Choose <b>Order Mode</b>");
+                   				 $("#orderModeError").css("color", "red");
+                   				orderModeError = false;
+                				} else {
+                   				 $("#orderModeError").hide();
+                   				orderModeError = true;
+                				}
+               					 return orderModeError;
+            							}
+							//-----------------validate_orderMode-------ENDS--------//
+							//----------validate_orderCode starts--------------//
+
+							function validate_orderCode() {
+								var val = $("#orderCode").val();
+								var exp = /^[A-Z]{4,25}$/;
+								if (val == '') {
+									$("#orderCodeError").show();
+									$("#orderCodeError").html(
+											"Enter <b>Order Code</b>");
+									$("#orderCodeError").css("color", "red");
+									shipmentCodeError = false;
+								} else if (!exp.test(val)) {
+									$("#orderCodeError").show();
+									$("#orderCodeError")
+											.html(
+													" <b>Must be between 4-25 Characters</b>");
+									$("#orderCodeError").css("color", "red");
+									orderCodeError = false;
+								} else {
+									$("#orderCodeError").hide();
+									orderCodeError = true;
+								}
+								return orderCodeError;
+							}
+							//--------validate_orderCode---- ends------//
+							//--------validate_orderType--------//
+							function validate_orderType() {
+								var val = $("#orderType").val();
+								if (val == '') {
+									$("#orderTypeError").show();
+									$("#orderTypeError").html(
+											"Choose <b>Order Type</b>");
+									$("#orderTypeError").css("color",
+											"red");
+									orderTypeError = false;
+								} else {
+									$("#orderTypeError").hide();
+									orderTypeError = true;
+								}
+								return orderTypeError;
+							}
+							//--------validate_orderType----ENDS----//
+
+							//-------validate_orderAcpt---Starts----//
+							 function validate_orderAcpt() {
+								 var len = $('input[type="checkbox"][name="orderAcpt"]:checked').length;
+                			if (len == 0) {
+                  			  $("#orderAcceptError").show();
+                   				 $("#orderAcceptError").html("Choose any one <b>Order Acpt</b>");
+                   				 $("#orderAcceptError").css("color", "red");
+                   				orderAcptError = false;
+                				} else {
+                   				 $("#orderAcceptError").hide();
+                   				orderAcceptError = true;
+                				}
+               					 return orderAcceptError;
+            							}
+
+							//--------validate_orderAcpt----ENDS----//
+							//--------validate_description----Starts----//
+							
+							function validate_description(){
+								var val = $("#description").val();
+								
+								if(val.length < 5||val.length >150){
+									$("#descriptionError").show();
+									$("#descriptionError").html(
+											"Must be <b>5-150 characters</b>");
+									$("#descriptionError")
+											.css("color", "red");
+									descriptionError = false;
+								}else{
+									$("#descriptionError").hide();
+									descriptionError= true;
+								}
+								return descriptionError;
+							}
+							//--------validate_description----ENDS----//
+							
+							//--validate submit ---starts-----//
+							$("#orderMethodForm").submit(function(){							
+								validate_orderMode();						
+								validate_orderCode();
+								validate_orderType();
+								validate_orderAcpt();
+								validate_description();
+								
+								if(orderModeError && orderCodeError && orderTypeError && 
+										orderAcptError &&
+										descriptionError){
+									return true;
+									
+								}else{
+									return false;
+								}
+						});
+							
+							///-----validate submit ---Ends-----/
+						});
+	</script>
+</body>
+</html>

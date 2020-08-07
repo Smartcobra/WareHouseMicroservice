@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+	
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3>WH USER TYPE EDIT PAGE!</h3>
+			</div>
+
+			<!--card body  -->
+			<div class="card-body">
+				<form id="whUserTypeForm" th:action="@{/whusertype/update}"
+					method="post" th:object="${whUserType}">
+					<input type="hidden" th:field="*{id}">
+					<!-- ROW#-1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="userType"> User Type</label>
+						</div>
+						<div class="col-2">
+							<input type="radio" th:field="*{userType}" value="Vendor" />Vendor
+						</div>
+						<div class="col-2">
+							<input type="radio" th:field="*{userType}" value="Customer" />Customer
+						</div>
+						<div class="col-4">
+							<span id="userTypeError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- ROW#-2 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="userCode">User Code</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{userCode}" class="form-control">
+						</div>
+						<div class="col-4">
+							<span id="userCodeError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- ROW#-3 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="userFor"> User For</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{userFor}" class="form-control"
+								readOnly />
+						</div>
+						<div class="col-4"></div>
+					</div>
+					<br>
+					<!-- ROW#-4 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="userMail"> User Mail</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{userMail}" class="form-control">
+						</div>
+						<div class="col-4">
+							<span id="userMailError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- ROW#-5 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="userContact"> User Contact</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{userContact}" class="form-control"></textarea>
+						</div>
+						<div class="col-4">
+							<span id="userContactError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- ROW#-6 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="UserIdType">User Id Type</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{userIdType}" class="form-control">
+								<option value="">--SELECT--</option>
+								<option value="PAN CARD">PAN CARD</option>
+								<option value="AADHAR CARD">AADHAR CARD</option>
+								<option value="VOTER ID CARD">VOTER ID CARD</option>
+								<option value="OTHER">OTHER</option>
+							</select>
+						</div>
+						<div class="col-4">
+							<span id="userIdTypeError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- ROW#-7 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="IfOther">If Other</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{ifOther}" class="form-control" />
+						</div>
+						<div class="col-4">
+							<span id="ifOtherError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- ROW#-8 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="IDNumber">ID Number</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{idNumber}" class="form-control" />
+						</div>
+						<div class="col-4">
+							<span id="idNumberError"></span>
+						</div>
+					</div>
+
+					<input type="submit" value="Update WhUserType"
+						class="btn btn-success" />
+
+				</form>
+
+
+
+			</div>
+			<!--card body  -->
+
+			<!--card footer  -->
+			<div th:if="${message !=null}">
+				<div class="card-footer bg-info text-white text-center">
+					<b> <span th:text="${message}"></span>
+					</b>
+				</div>
+				<!--card footer  -->
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	
+	//--Auto fill----//
+	$('input[type="radio"][name="userType"]').change(function(){
+		autoFillUserFor();
+	});
+	
+	function autoFillUserFor(){
+		var val= $('input[type="radio"][name="userType"]:checked').val();
+		
+		if(val=="Vendor"){
+			$("#userFor").val('Purchase');
+		}else if(val=="Customer"){
+			$("#userFor").val('Sale');
+		}
+	}
+	
+	//ifOther Text Input
+	$("#userIdType").change(function(){
+		var val=$("#userIdType").val();
+		///alert(val);
+		if(val=='OTHER'){
+			$("#ifOther").removeAttr("readOnly");
+		}else{
+			$("#ifOther").attr("readOnly","true");
+			$("#ifOther").val("");
+		}
+	});
+	
+	
+	</script>
+</body>
+</html>

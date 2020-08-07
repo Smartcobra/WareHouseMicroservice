@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+	
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header text-center bg-primary">
+				<h1>WELCOME TO UOM EDIT PAGE</h1>
+			</div>
+			<!-- Card body Starts -->
+			<div class="card-body">
+				<form id="uomForm" th:action="@{/uom/update}"
+					method="POST" th:object="${uom}">
+					<input type="hidden" readonly="readonly" th:field="*{id}"/>
+					<!--ROW #1  -->
+					<div class="row">
+						<div class="col-2">
+							<label for="UomType"> Uom Type</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{uomType}" class="form-control">
+								<option value="">--NA--</option>
+								<option value="PACKING">PACKING</option>
+								<option value="NoPACKING">NO PACKING</option>
+							</select>
+						</div>
+						<div class="col-4">
+							<span id="uomTypeError"></span>
+						</div>
+					</div>
+					<br>
+						<!--ROW #2  -->
+					<br>
+					<div class="row">
+						<div class="col-2">
+							<label for="uomModel">Uom Model</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{uomModel}" class="form-control"></textarea>
+						</div>
+						<div class="col-4">
+							<span id="uomModelError"></span>
+						</div>
+					</div>
+				
+					<!--ROW #5  -->
+					<br>
+					<div class="row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-4">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+					<!--ROW #6  -->
+					<br>
+					<div class="row">
+						<div class="col-4">
+							<input type="submit" class="btn btn-success"
+								value="Edit Uom">
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div th:if="${message!=null}">
+				<div class="card-footer bg-primary text-white text-center">
+					<b><span th:text="${message}"></span></b>
+				</div>
+			</div>
+			<!-- card Footer End -->
+		</div>
+	</div>
+
+	
+</body>
+</html>

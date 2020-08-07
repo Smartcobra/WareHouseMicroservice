@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-center">
+				<h3>WELCOME TO SHIPMENT DATA PAGE</h3>
+			</div>
+			<hr>
+			<div class="card-body">
+
+				<a th:href="@{/shipmenttype/excel}" class="btn btn-warning">EXCEL
+					EXPORT</a> <a th:href="@{/shipmenttype/pdf}" class="btn btn-warning">PDF
+					EXPORT</a>
+
+				<table class="table table-bordered">
+					<thead class="thead-dark">
+						<tr class="bg-info text-white text-center">
+							<th>ID</th>
+							<th>CODE</th>
+							<th>MODE</th>
+							<th>ENABLE</th>
+							<th>GRADE</th>
+							<th>DESCRIPTION</th>
+							<th colspan="10">OPERATION</th>
+						</tr>
+
+						<tr class="text-center" th:each="ob:${list}">
+							<td th:text="${ob.id}"></td>
+							<td th:text="${ob.shipmentMode}"></td>
+							<td th:text="${ob.shipmentCode}"></td>
+							<td th:text="${ob.enableShipment}"></td>
+							<td th:text="${ob.shipmentGrade}"></td>
+							<td th:text="${ob.description}"></td>
+							<td><a th:href="@{/shipmenttype/delete/{id}(id=${ob.id})}"
+								class="btn btn-danger">DELETE</a> 
+								<a
+								th:href="@{/shipmenttype/edit/{id}(id=${ob.id})}"
+								class="btn btn-info">EDIT</a> 
+								<a
+								th:href="@{/shipmenttype/excel/{id}(id=${ob.id})}"
+								class="btn btn-success">Excel</a> 
+								<a
+								th:href="@{/shipmenttype/pdf/{id}(id=${ob.id})}"
+								class="btn btn-success">PDF</a>
+								</td>
+
+
+						</tr>
+				</table>
+			</div>
+			<div th:if="${message !=null}">
+				<div class="card-footer bg-info text-center text-white">
+					<span th:text="${message}"></span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

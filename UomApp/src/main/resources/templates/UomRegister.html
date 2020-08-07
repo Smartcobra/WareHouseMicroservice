@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+	
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header text-center bg-primary">
+				<h1>WELCOME TO UOM REGISTER</h1>
+			</div>
+			<!-- Card body Starts -->
+			<div class="card-body">
+				<form id="uomForm" th:action="@{/uom/save}" method="POST"
+					th:object="${uom}">
+
+					<!--ROW #1  -->
+					<div class="row">
+						<div class="col-2">
+							<label for="UomType"> Uom Type</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{uomType}" class="form-control">
+								<option value="">--NA--</option>
+								<option value="PACKING">PACKING</option>
+								<option value="NoPACKING">NO PACKING</option>
+							</select>
+						</div>
+						<div class="col-4">
+							<span id="uomTypeError"></span>
+						</div>
+					</div>
+					<br>
+					<!--ROW #2  -->
+					<br>
+					<div class="row">
+						<div class="col-2">
+							<label for="uomModel">Uom Model</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{uomModel}" class="form-control"></textarea>
+						</div>
+						<div class="col-4">
+							<span id="uomModelError"></span>
+						</div>
+					</div>
+
+					<!--ROW #5  -->
+					<br>
+					<div class="row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-4">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+					<!--ROW #6  -->
+					<br>
+					<div class="row">
+						<div class="col-4">
+							<input type="submit" class="btn btn-success" value="Create Uom">
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div th:if="${message!=null}">
+				<div class="card-footer bg-primary text-white text-center">
+					<b><span th:text="${message}"></span></b>
+				</div>
+			</div>
+			<!-- card Footer End -->
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#uomTypeError").hide();
+							$("#uomModelError").hide();
+							$("#descriptionError").hide();
+
+							var uomTypeError = false;
+							var uomModelError = false;
+							var descriptionError = false;
+
+							$("#uomType").change(function() {
+								validate_uomType();
+							});
+
+							$("#uomModel").keyup(
+									function() {
+										$("#uomModel").val(
+												$("#uomModel").val()
+														.toUpperCase());
+										validate_uomModel();
+									});
+
+							$("#description").keyup(function() {
+								validate_description();
+							});
+							//--uomType----statrt-//
+							function validate_uomType() {
+								var val = $("#uomType").val();
+								if (val == '') {
+									$("#uomTypeError").html(
+											"chosse<b> Uom Type</b>");
+									$("#uomTypeError").css("color", "red");
+									$("#uomTypeError").show();
+									uomTypeError = false;
+
+								} else {
+									$("#uomTypeError").hide();
+									uomTypeError = true;
+								}
+								return uomTypeError;
+							}
+							//----uomType----end--///
+
+							//----uomModel----Start--///
+							function validate_uomModel() {
+								var val = $("#uomModel").val();
+								var exp = /^[A-Z]{5,25}$/;
+
+								if (val == '') {
+									$("#uomModelError").html(
+											"<b>Uom Model Required</b> ");
+									$("#uomModelError").css("color", "red");
+									$("#uomModelError").show();
+									uomModelError = false;
+								} else if (!exp.test(val)) {
+									$("#uomModelError")
+											.html(
+													"<b>Uom Model only [5-25] Characters</b> ");
+									$("#uomModelError").css("color", "red");
+									$("#uomModelError").show();
+									uomModelError = false;
+								} else {
+									$("uomModelError").hide();
+									uomModelError = true;
+								}
+								return uomModelError;
+							}
+							//----uomModel----end--///
+							function validate_description() {
+								var val = $("#description").val();
+								if(val.length < 5||val.length >150){
+									$("#descriptionError").html("<b> Description required [5-125] chars </b>");
+									$("#descriptionError").css("color", "red");
+									$("#descriptionError").show();
+									descriptionError = false;
+								}else{
+									$("#descriptionError").hide();
+									descriptionError = true;
+								}
+								return descriptionError;
+							}
+
+							//---------on submit----------//
+							$("#uomForm").submit(function() {
+								validate_uomType();
+								validate_uomModel();
+								validate_description()
+
+								if (uomTypeError && uomModelError && descriptionError)
+									return true;
+								else
+									return false;
+							});
+
+						});
+	</script>
+
+</body>
+</html>

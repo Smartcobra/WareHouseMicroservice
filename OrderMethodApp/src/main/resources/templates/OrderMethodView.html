@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+	
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header text-center bg-primary">
+				<h3>ORDER METHOD VIEW PAGE</h3>
+			</div>
+
+			<div class="card-body ">
+
+				<table class="table table-bordered">
+					
+					<tr>
+						<th>ID</th>
+						<td th:text="${ob.id}"></td>
+					</tr>
+					<tr>
+						<th>Order Mode</th>
+						<td th:text="${ob.orderMode}"></td>
+					</tr>
+					<tr>
+						<th>Order Code</th>
+						<td th:text="${ob.orderCode}"></td>
+					</tr>
+					<tr>
+						<th>Order Type</th>
+						<td th:text="${ob.orderType}"></td>
+					</tr>
+					<tr>
+						<th>Order Acpt</th>
+						<td th:text="${ob.orderAcpt}"></td>
+					</tr>
+					<tr>
+						<th>Description</th>
+						<td th:text="${ob.description}"></td>
+					</tr>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

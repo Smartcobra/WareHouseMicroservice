@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-center">
+				<h3>UOM DATA DETAILS</h3>
+			</div>
+			<hr>
+			<div class="card-body">
+
+				<a th:href="@{/uom/excel}" class="btn btn-warning">EXCEL EXPORT</a>
+				<a th:href="@{/uom/pdf}" class="btn btn-warning">PDF EXPORT</a>
+
+				<table class="table table-bordered">
+					<thead class="thead-dark">
+						<tr class="bg-info text-white text-center">
+							<th>ID</th>
+							<th>TYPE</th>
+							<th>MODEL</th>
+							<th>DESCRIPTION</th>
+							<th colspan="10">OPERATION</th>
+						</tr>
+
+						<tr class="text-center" th:each="ob:${page.content}">
+							<td th:text="${ob.id}"></td>
+							<td th:text="${ob.uomType}"></td>
+							<td th:text="${ob.uomModel}"></td>
+							<td th:text="${ob.description}"></td>
+							<td><a th:href="@{/uom/delete/{id}(id=${ob.id})}"
+								class="btn btn-danger">DELETE</a> 
+								<a
+								th:href="@{/uom/edit/{id}(id=${ob.id})}" class="btn btn-info">EDIT
+								</a>
+								<a
+								th:href="@{/uom/view/{id}(id=${ob.id})}" class="btn btn-info">VIEW
+								</a>
+
+							</td>
+						</tr>
+				</table>
+			</div>
+			<div th:if="${message !=null}">
+				<div class="card-footer bg-info text-center text-white">
+					<span th:text="${message}"></span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

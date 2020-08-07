@@ -37,7 +37,7 @@ public class OrderMethodController {
 		Integer id = service.saveOrderMethod(orderMethod);
 		String message = "Order Method '" + id + "' saved";
 		model.addAttribute("message", message);
-		// clear form
+		// clear the form
 		model.addAttribute("orderMethod", new OrderMethod());
 
 		return "OrderMethodRegister";

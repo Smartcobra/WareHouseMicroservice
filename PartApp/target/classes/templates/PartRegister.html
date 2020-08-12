@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+	
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h2>Part Registration Page</h2>
+			</div>
+			<!--card body  -->
+			<div class="card-body">
+				<form class="form-group" th:action="@{/part/save}" method="POST"
+					th:object="${part}" id="partForm">
+					<!--row#1  -->
+
+					<div class="form-group row">
+						<div class="col-2">
+							<label for="partCode">Part Code</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{partCode}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="partCodeError"></span>
+						</div>
+					</div>
+
+					<!--row#2  -->
+					<div class=" form-group row">
+						<div class="col-2">
+							<label for="partWidth">Part Width</label>
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control" th:field="*{partWidth}" />
+						</div>
+						<div class="col-6">
+							<span id="partWidthError"></span>
+						</div>
+					</div>
+
+					<!--row#3  -->
+					<div class=" form-group row">
+						<div class="col-2">
+							<label for="partLen">Part Length</label>
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control" th:field="*{partLen}" />
+						</div>
+						<div class="col-6">
+							<span id="partLenError"></span>
+						</div>
+					</div>
+
+					<!--row#4  -->
+					<div class=" form-group row">
+						<div class="col-2">
+							<label for="partHgh">Part Height</label>
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control" th:field="*{partHgh}" />
+						</div>
+						<div class="col-6">
+							<span id="partHghError"></span>
+						</div>
+					</div>
+
+					<!--row#5  -->
+					<div class=" form-group row">
+						<div class="col-2">
+							<label for="baseCost">Base Cost</label>
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control" th:field="*{baseCost}" />
+						</div>
+						<div class="col-6">
+							<span id="baseCostError"></span>
+						</div>
+					</div>
+
+					<!--row#6  -->
+					<div class="form-group row">
+						<div class="col-2">
+							<label for="baseCurr">Base Currency</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{baseCurr}" class="form-control">
+								<option value="">-SELECT-</option>
+								<option value="INR">INR</option>
+								<option value="USD">USD</option>
+								<option value="AUS">AUS</option>
+								<option value="ERU">ERU</option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="baseCurrError"></span>
+						</div>
+					</div>
+
+					<!--row#7  -->
+					<div class="form-group row">
+						<div class="col-2">
+							<label for="uom">Uom</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{uom}" class="form-control">
+								<option value="">-SELECT-</option>
+								<option th:each="u:${uoms}" th:value="${u.key}"
+									th:text="${u.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="uomError"></span>
+						</div>
+					</div>
+
+
+					<!--row#8  -->
+					<div class="form-group row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-6">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+
+					<input type="submit" value="Create Part" class="btn btn-success">
+
+				</form>
+			</div>
+			<div th:if="${message!=null}">
+				<!--card body  -->
+				<div class="card-footer text-center bg-info text-white">
+					<b><span th:text="${message}"></span></b>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							//hide the span tag
+							$("#partCodeError").hide();
+							$("#partWidthError").hide();
+							$("#partLenError").hide();
+							$("#partHghError").hide();
+							$("#baseCostError").hide();
+							$("#baseCurrError").hide();
+							$("#descriptionError").hide();
+							$("#uomError").hide();
+
+							//define flag
+							var partCodeError = false;
+							var partWidthError = false;
+							var partLenError = false;
+							var partHghError = false;
+							var baseCostError = false;
+							var baseCurrError = false;
+							var descriptionError = false;
+							var uomError = false;
+
+							//define validate functions
+
+							$("#partCode").keyup(
+									function() {
+										$("#partCode").val(
+												$("#partCode").val()
+														.toUpperCase());
+										validate_partCode();
+									});
+
+							$("#partWidth").keyup(function() {
+								validate_partWidth();
+							});
+
+							$("#partLen").keyup(function() {
+								validate_partLen();
+							});
+
+							$("#partHgh").keyup(function() {
+								validate_partHgh();
+							});
+
+							$("#baseCost").keyup(function() {
+								validate_baseCost();
+							});
+
+							$("#baseCurr").change(function() {
+								validate_baseCurr();
+							});
+
+							$("#uom").change(function() {
+								validate_uom();
+							});
+
+							$("#description").keyup(function() {
+								validate_description();
+							});
+
+							//validate
+
+							function validate_partCode() {
+								var val = $("#partCode").val();
+								var exp = /^[A-Z]{5,25}$/;
+
+								if (val == '') {
+									$("#partCodeError").html(
+											"<b>Part Code Required</b> ");
+									$("#partCodeError").css("color", "red");
+									$("#partCodeError").show();
+									partCodeError = false;
+								} else if (!exp.test(val)) {
+									$("#partCodeError")
+											.html(
+													"<b>Part Code only [5-25] Characters</b> ");
+									$("#partCodeError").css("color", "red");
+									$("#partCodeError").show();
+									partCodeError = false;
+								} else {
+									alert("OK");
+									var loc = 'validatecode'; //register page
+									var id = 0; //register 
+									if ($("#id").val() !== undefined) {
+										//edit page
+										loc = '../validatecode';
+										id = $("#id").val();
+									}
+									//AJ START
+									$.ajax({
+										
+										url : loc,
+										data : {
+											"code" : val,
+											"id" : id
+										},
+										success : function(resTxt) {
+											if (resTxt != "") {
+												$("#partCodeError").show();
+												$("#partCodeError")
+														.html(resTxt);
+												$("#partCodeError").css(
+														"color", "red");
+												partCodeError = false;
+											} else {
+												$("#partCodeError").hide();
+												partCodeError = true;
+											}
+										}
+									});
+									//AJ-END
+
+								} // else end
+								return partCodeError;
+							}
+
+							function validate_partWidth() {
+								var val = $("#partWidth").val();
+								var exp = /^[1-9][0-9]*$/;
+
+								if (val == '') {
+									$("#partWidthError").html(
+											"<b>Part Width Required</b> ");
+									$("#partWidthError").css("color", "red");
+									$("#partWidthError").show();
+									partWidthError = false;
+								} else if (!exp.test(val)) {
+									$("#partWidthError")
+											.html(
+													"<b>Part width only numeric values</b> ");
+									$("#partWidthError").css("color", "red");
+									$("#partWidthError").show();
+									partWidthError = false;
+								} else {
+									$("partWidthError").hide();
+									partWidthError = true;
+								}
+								return partWidthError;
+							}
+
+							function validate_partLen() {
+								var val = $("#partLen").val();
+								var exp = /^[1-9][0-9]*$/;
+
+								if (val == '') {
+									$("#partLenError").html(
+											"<b>Part Length Required</b> ");
+									$("#partLenError").css("color", "red");
+									$("#partLenError").show();
+									partLenError = false;
+								} else if (!exp.test(val)) {
+									$("#partLenError")
+											.html(
+													"<b>Part Length only numeric values</b> ");
+									$("#partLenError").css("color", "red");
+									$("#partLenError").show();
+									partLenError = false;
+								} else {
+									$("partLenError").hide();
+									partLenError = true;
+								}
+								return partLenError;
+							}
+
+							function validate_partHgh() {
+								var val = $("#partHgh").val();
+								var exp = /^[1-9][0-9]*$/;
+
+								if (val == '') {
+									$("#partHghError").html(
+											"<b>Part height Required</b> ");
+									$("#partHghError").css("color", "red");
+									$("#partHghError").show();
+									partHghError = false;
+								} else if (!exp.test(val)) {
+									$("#partHghError")
+											.html(
+													"<b>Part Height only numeric values</b> ");
+									$("#partHghError").css("color", "red");
+									$("#partHghError").show();
+									partLenError = false;
+								} else {
+									$("partHghError").hide();
+									partHghError = true;
+								}
+								return partHghError;
+							}
+
+							function validate_baseCost() {
+								var val = $("#baseCost").val();
+								var exp = /^[1-9][0-9]*$/;
+
+								if (val == '') {
+									$("#baseCostError").html(
+											"<b>Part Base cost Required</b> ");
+									$("#baseCostError").css("color", "red");
+									$("#baseCostError").show();
+									baseCostError = false;
+								} else if (!exp.test(val)) {
+									$("#baseCostError")
+											.html(
+													"<b>Part Base cost only numeric values</b> ");
+									$("#baseCostError").css("color", "red");
+									$("#baseCostError").show();
+									baseCostError = false;
+								} else {
+									$("baseCostError").hide();
+									baseCostError = true;
+								}
+								return baseCostError;
+							}
+
+							function validate_baseCurr() {
+								var val = $("#baseCurr").val();
+								if (val == '') {
+									$("#baseCurrError")
+											.html(
+													"<b>Pleae select base currency</b> ");
+									$("#baseCurrError").css("color", "red");
+									$("#baseCurrError").show();
+									baseCurrError = false;
+								} else {
+									$("baseCurrError").hide();
+									baseCurrError = true;
+								}
+								return baseCurrError;
+							}
+
+							function validate_uom() {
+								var val = $("#uom").val();
+								if (val == '') {
+									$("#uomError").html(
+											"<b>Pleae select UOM</b> ");
+									$("#uomError").css("color", "red");
+									$("#uomError").show();
+									uomError = false;
+								} else {
+									$("uomError").hide();
+									uomError = true;
+								}
+								return uomError;
+							}
+
+							function validate_description() {
+								var val = $("#description").val();
+								if (val == '') {
+									$("#descriptionError").html(
+											"<b>Pleae select UOM</b> ");
+									$("#descriptionError").css("color", "red");
+									$("#descriptionError").show();
+									descriptionError = false;
+								} else {
+									$("descriptionError").hide();
+									descriptionError = true;
+								}
+								return descriptionError;
+							}
+
+							//---------on submit----------//
+
+							$("#partForm")
+									.submit(
+											function() {
+												validate_partCode();
+												validate_partWidth();
+												validate_partLen();
+												validate_partHgh();
+												validate_baseCost();
+												validate_baseCurr();
+												validate_description();
+												validate_uom();
+												if (partCodeError
+														&& partWidthError
+														&& partLenError
+														&& partHghError
+														&& baseCostError
+														&& baseCurrError
+														&& descriptionError
+														&& uomError) {
+													return true;
+												} else {
+													return false;
+												}
+											});
+
+						});
+	</script>
+
+</body>
+</html>

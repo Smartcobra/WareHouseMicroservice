@@ -36,7 +36,7 @@ public class UomRestController {
 			// System.out.println(uom.getUomModel());
 			uomVO.setUomType(uom.getUomType());
 			// System.out.println(uom.getUomType());
-			// System.out.println(uomVO);
+			System.out.println(uomVO);
 			//listUomVO.set(index, uomVO);
 			
 			listUomVO.add(index, uomVO);

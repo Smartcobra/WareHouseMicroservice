@@ -134,6 +134,7 @@ public class PartController {
 	/*
 	 * @ResponseBody to indicate that the method is responding a string. otherwise
 	 * it will serach for a HTML page.
+	 * this is for AJAX call
 	 */
 	@GetMapping("/validatecode")
 	private @ResponseBody String validatePartCodeId(@RequestParam String code, @RequestParam Integer id) {

@@ -18,9 +18,15 @@ public class PurchaseOrderController {
 	@Autowired
 	private PurchaseOrderService service;
 
+	private void addDorpDownUi(Model model) {
+		model.addAttribute("shipmentcode", service.getShipmentIdAndCode());
+		model.addAttribute("whUsercode", service.getWhUserTypeIdAndCode());
+	}
+
 	@GetMapping("/register")
 	public String showRegister(Model model) {
 		model.addAttribute("purchaseOrder", new PurchaseOrder());
+		addDorpDownUi(model);
 		return "PurchaseOrderRegister";
 
 	}
@@ -35,6 +41,7 @@ public class PurchaseOrderController {
 		message = "Purcahse Order with id '" + id + "' saved succesfully ";
 		model.addAttribute("message", message);
 		model.addAttribute("purchaseOrder", new PurchaseOrder());
+		addDorpDownUi(model);
 		return "PurchaseOrderRegister";
 
 	}

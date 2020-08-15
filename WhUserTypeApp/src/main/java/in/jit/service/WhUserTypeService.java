@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import in.jit.model.WhUserType;
+import in.jit.model.WhUserTypeVO;
 
 public interface WhUserTypeService {
 	
@@ -21,5 +22,8 @@ public interface WhUserTypeService {
 	public boolean isWhUserTypeEmailExist(String mail);
 	
 	public Map<Integer,String> getWhUserTypeIdAndCode(String userType);
+	
+	public List<WhUserTypeVO> getWhUserTypeIdAndCode();
+	
 
 }

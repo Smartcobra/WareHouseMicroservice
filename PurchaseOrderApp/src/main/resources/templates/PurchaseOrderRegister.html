@@ -44,8 +44,8 @@
 							<select th:field="*{shipmentType}"
 								class="form-control">
 								<option value="">SELECT</option>
-								<!-- <option th:each="ob:${shipmentTypes}" th:value="${ob.key}"
-									th:text="${ob.value}"></option> -->
+								<option th:each="ob:${shipmentcode}" th:value="${ob.key}"
+									th:text="${ob.value}"></option>
 							</select>
 						</div>
 						<div class="col-6">
@@ -61,7 +61,7 @@
 						<div class="col-4">
 							<select th:field="*{vendor}"  class="form-control">
 								<option value="">SELECT</option>
-								<!-- <option th:each="ob:${whUserTypes}" th:value="${ob.key}"
+								<!-- <option th:each="ob:${whUsercode}" th:value="${ob.key}"
 									th:text="${ob.value}"></option> -->
 							</select>
 						</div>

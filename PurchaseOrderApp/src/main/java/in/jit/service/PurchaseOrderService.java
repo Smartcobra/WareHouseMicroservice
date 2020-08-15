@@ -1,6 +1,7 @@
 package in.jit.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import in.jit.model.PurchaseOrder;
@@ -19,6 +20,10 @@ public interface PurchaseOrderService {
 	
 	public boolean isPurchaseOrderExist(Integer id);
 	public boolean isPurchaseOrderCodeExists(String orderCode);
+	
+	public Map<Integer, String> getShipmentIdAndCode();
+	
+	public Map<Integer, String> getWhUserTypeIdAndCode();
 	
 	
 	

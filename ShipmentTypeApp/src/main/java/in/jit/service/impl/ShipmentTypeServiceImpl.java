@@ -1,14 +1,13 @@
 package in.jit.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import in.jit.model.ShipmentType;
+import in.jit.model.ShipmentVO;
 import in.jit.repo.ShipmentTypeRepository;
 import in.jit.service.ShipmentTypeService;
 
@@ -17,7 +16,6 @@ public class ShipmentTypeServiceImpl implements ShipmentTypeService {
 
 	@Autowired
 	ShipmentTypeRepository repo;
-
 
 	@Override
 	@Transactional
@@ -56,6 +54,36 @@ public class ShipmentTypeServiceImpl implements ShipmentTypeService {
 	public boolean isShipmentTypeExist(Integer id) {
 		boolean exist = repo.existsById(id);
 		return exist;
+	}
+
+	@Override
+	public List<ShipmentVO> getShipmentIdAndCode() {
+		/// List<Object[]> list = repo.getAllShipmentCodeEnable();
+		// Map<Integer, String> map = list.stream()
+		/// .collect(Collectors.toMap(ob -> Integer.valueOf(ob[0].toString()), ob ->
+		/// ob[1].toString()));
+		ShipmentVO shipmentVO = null;
+		List<ShipmentVO> shipmentList = new ArrayList<ShipmentVO>();
+		int index = 0;
+
+		List<Object[]> listShipment = repo.getAllShipmentCodeEnable();
+		for (Object[] l : listShipment) {
+			shipmentVO = new ShipmentVO();
+			shipmentVO.setId(Integer.valueOf(l[0].toString()));
+			// System.out.println(">>>>>l0>>>>"+l[0]);
+			shipmentVO.setShipmentCode(l[1].toString());
+			shipmentList.add(index, shipmentVO);
+			index++;
+			// System.out.println(">>>>>l1>>>"+l[1]);
+		}
+
+		System.out.println("getShipmentIdAndCode--shipmentTypleist");
+		for (int i = 0; i < shipmentList.size(); i++) {
+			System.out.println(shipmentList.get(i).getId());
+			System.out.println(shipmentList.get(i).getShipmentCode());
+		}
+
+		return shipmentList;
 	}
 
 }

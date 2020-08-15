@@ -33,6 +33,11 @@ public class UomVO {
 	public void setUomModel(String uomModel) {
 		this.uomModel = uomModel;
 	}
+
+	@Override
+	public String toString() {
+		return "UomVO [id=" + id + ", uomType=" + uomType + ", uomModel=" + uomModel + "]";
+	}
 	
 	
 }

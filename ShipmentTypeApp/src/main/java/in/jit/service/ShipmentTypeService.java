@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import in.jit.model.ShipmentType;
+import in.jit.model.ShipmentVO;
 
 public interface ShipmentTypeService {
 
@@ -18,5 +19,7 @@ public interface ShipmentTypeService {
 	public boolean isShipmentTypeExist(Integer id);
 	
 	public Optional<ShipmentType> getOneShipmentType(Integer id);
+	
+	public List<ShipmentVO> getShipmentIdAndCode();
 
 }

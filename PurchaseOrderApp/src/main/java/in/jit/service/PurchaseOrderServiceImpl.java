@@ -1,19 +1,28 @@
 package in.jit.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jit.client.ClientCalls;
+
 import in.jit.model.PurchaseOrder;
+import in.jit.model.ShipmentVO;
+import in.jit.model.WhUserTypeVO;
 import in.jit.repo.PurchaseOrderRepository;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	
 	@Autowired
-	PurchaseOrderRepository repo;
+	private PurchaseOrderRepository repo;
+	
+	@Autowired
+	private ClientCalls clientCalls;
 	
 	@Override
 	public Integer savePurchaseOrder(PurchaseOrder order) {
@@ -50,6 +59,22 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Override
 	public boolean isPurchaseOrderExist(Integer id) {
 		return repo.existsById(id);
+	}
+
+	@Override
+	public Map<Integer, String> getShipmentIdAndCode() {
+		List<ShipmentVO> shipmentTypeIdCode = clientCalls.shipmentTypeIdCode();
+		Map<Integer, String> shipmentVOMap = shipmentTypeIdCode.stream().collect(Collectors.toMap(ShipmentVO::getId, ShipmentVO::getShipmentCode));
+		shipmentVOMap.forEach((k,v)->System.out.println(k+"::"+v));
+		return shipmentVOMap;
+	}
+
+	@Override
+	public Map<Integer, String> getWhUserTypeIdAndCode() {
+		List<WhUserTypeVO> whUserTypeIdCode = clientCalls.whUserTypeIdCode();
+		Map<Integer, String> WhUserTypeVOMap = whUserTypeIdCode.stream().collect(Collectors.toMap(WhUserTypeVO::getId, WhUserTypeVO::getWhUserTypeCode));
+		WhUserTypeVOMap.forEach((k,v)->System.out.println(k+"::"+v));
+		return WhUserTypeVOMap;
 	}
 
 }

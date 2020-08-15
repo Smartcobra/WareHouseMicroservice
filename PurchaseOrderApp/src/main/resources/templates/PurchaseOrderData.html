@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+</head>
+<div class="container">
+	<div class="card">
+		<div class="card-header bg-primary text-center text-white">
+			<h2>Purchase Order Data Details</h2>
+		</div>
+		<div class="card-body">
+			<div class="form-group">
+				<a th:href="@{/purchaseorder/excel}" class="btn btn-warning btn-lg "><i
+					class="fas fa-file-excel"></i></a> <a th:href="@{/purchaseorder/pdf}"
+					class="btn btn-secondary btn-lg "><i class="fas fa-file-pdf"></i></a>
+				<div>
+					<table class="table table-bordered">
+						<thead class="thead-dark">
+							<tr>
+								<th>ORDER ID</th>
+								<th>ORDER CODE</th>
+								<th>SHIPMENT CODE</th>
+								<th>VENDOR</th>
+								<th>REF NUMBER</th>
+								<th>QTY CHECK</th>
+								<th></th>
+								<th colspan="5">OPERATIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="ob:${list}">
+								<td th:text="${ob.id}"></td>
+								<td th:text="${ob.orderCode}"></td>
+								<td th:text="${ob.shipmentType}"></td>
+								<td th:text="${ob.vendor}"></td>
+								<td th:text="${ob.referenceNumber}"></td>
+								<td th:text="${ob.qualityCheck}"></td>
+
+								<td><a th:href="@{/purchaseorder/edit/{id}(id=${ob.id})}"
+									class="btn btn-success"> <i class="far fa-edit"></i>
+								</a></td>
+
+								<td><a th:href="@{/purchaseorder/view/{id}(id=${ob.id})}"
+									class="btn btn-info"><i class="far fa-eye"></i></a></td>
+
+								<td><a th:href="@{/purchaseorder/delete/{id}(id=${ob.id})}"
+									class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+
+								<td><a th:href="@{/purchaseorder/excel/{id}(id=${ob.id})}"
+									class="btn btn-warning"><i class="fas fa-file-excel"></i></a></td>
+
+								<td><a th:href="@{/purchaseorder/pdf/{id}(id=${ob.id})}"
+									class="btn btn-secondary"><i class="fas fa-file-pdf"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+		<div th:if="${message!=null}">
+			<div class="card-footer bg-info text-white text-center">
+				<b><span th:text="${message}"></span></b>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

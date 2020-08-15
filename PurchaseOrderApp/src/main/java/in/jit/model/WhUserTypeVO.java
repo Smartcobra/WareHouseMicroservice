@@ -3,7 +3,7 @@ package in.jit.model;
 public class WhUserTypeVO {
 
 	private Integer id;
-	private String whUserTypeCode;
+	private String userCode;
 
 	public Integer getId() {
 		return id;
@@ -13,12 +13,14 @@ public class WhUserTypeVO {
 		this.id = id;
 	}
 
-	public String getWhUserTypeCode() {
-		return whUserTypeCode;
+	public String getUserCode() {
+		return userCode;
 	}
 
-	public void setWhUserTypeCode(String whUserTypeCode) {
-		this.whUserTypeCode = whUserTypeCode;
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
+
+	
 
 }

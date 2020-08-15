@@ -1,5 +1,7 @@
 package in.jit.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,5 +46,12 @@ public class PurchaseOrderController {
 		addDorpDownUi(model);
 		return "PurchaseOrderRegister";
 
+	}
+	
+	@GetMapping("/all")
+	public String getAllPurchaseOrder(Model model) {
+		List<PurchaseOrder> list = service.getAllPurchaseOrders();
+		model.addAttribute("list", list);
+		return "PurchaseOrderData";
 	}
 }

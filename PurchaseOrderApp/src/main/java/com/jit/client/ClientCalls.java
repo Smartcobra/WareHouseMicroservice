@@ -44,7 +44,10 @@ public class ClientCalls {
 				new ParameterizedTypeReference<List<WhUserTypeVO>>() {
 				});
 		listWhUserTypeVO = response.getBody();
-		System.out.println(listWhUserTypeVO);
+		for (WhUserTypeVO vo : listWhUserTypeVO) {
+	           System.out.println(">>>>>ID>>>"+vo.getId());
+	           System.out.println(">>>>>CODE>>>"+vo.getUserCode());
+			}
 		return listWhUserTypeVO;
 
 	}

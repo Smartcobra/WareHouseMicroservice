@@ -17,13 +17,13 @@ import in.jit.repo.PurchaseOrderRepository;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
-	
+
 	@Autowired
 	private PurchaseOrderRepository repo;
-	
+
 	@Autowired
 	private ClientCalls clientCalls;
-	
+
 	@Override
 	public Integer savePurchaseOrder(PurchaseOrder order) {
 		return repo.save(order).getId();
@@ -53,7 +53,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	@Override
 	public boolean isPurchaseOrderCodeExists(String orderCode) {
-		return repo.getPurchaseOrderCodeCount(orderCode) > 0 ? true:false;
+		return repo.getPurchaseOrderCodeCount(orderCode) > 0 ? true : false;
 	}
 
 	@Override
@@ -64,16 +64,28 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Override
 	public Map<Integer, String> getShipmentIdAndCode() {
 		List<ShipmentVO> shipmentTypeIdCode = clientCalls.shipmentTypeIdCode();
-		Map<Integer, String> shipmentVOMap = shipmentTypeIdCode.stream().collect(Collectors.toMap(ShipmentVO::getId, ShipmentVO::getShipmentCode));
-		shipmentVOMap.forEach((k,v)->System.out.println(k+"::"+v));
+		Map<Integer, String> shipmentVOMap = shipmentTypeIdCode.stream()
+				.collect(Collectors.toMap(ShipmentVO::getId, ShipmentVO::getShipmentCode));
+		shipmentVOMap.forEach((k, v) -> System.out.println(k + "::" + v));
 		return shipmentVOMap;
 	}
 
 	@Override
 	public Map<Integer, String> getWhUserTypeIdAndCode() {
 		List<WhUserTypeVO> whUserTypeIdCode = clientCalls.whUserTypeIdCode();
-		Map<Integer, String> WhUserTypeVOMap = whUserTypeIdCode.stream().collect(Collectors.toMap(WhUserTypeVO::getId, WhUserTypeVO::getWhUserTypeCode));
-		WhUserTypeVOMap.forEach((k,v)->System.out.println(k+"::"+v));
+		System.out.println("from service IMPL");
+		whUserTypeIdCode.stream().forEach(System.out::println);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+
+		for (WhUserTypeVO vo : whUserTypeIdCode) {
+           System.out.println(vo.getId());
+           System.out.println(vo.getUserCode());
+		}
+		Map<Integer, String> WhUserTypeVOMap = whUserTypeIdCode.stream()
+				.collect(Collectors.toMap(WhUserTypeVO::getId, WhUserTypeVO::getUserCode));
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		WhUserTypeVOMap.forEach((k, v) -> System.out.println(k + "::" + v));
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
 		return WhUserTypeVOMap;
 	}
 

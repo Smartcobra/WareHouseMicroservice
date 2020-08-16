@@ -15,6 +15,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
@@ -61,7 +62,7 @@ public class WhUserTypePDFView extends AbstractPdfView {
 		//fonth.setColor(BaseColor.WHITE);
 		Font fontb = new Font(Font.NORMAL,7);
 
-		/// Paragraph p = new Paragraph("J Company", font);
+		//Paragraph p = new Paragraph("J Company", fonth);
 		// p.setAlignment(Element.ALIGN_LEFT);
 
 		// document.add(p);

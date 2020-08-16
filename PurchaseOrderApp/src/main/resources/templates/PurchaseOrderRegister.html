@@ -41,8 +41,7 @@
 							<label>Shipment Code</label>
 						</div>
 						<div class="col-4">
-							<select th:field="*{shipmentType}"
-								class="form-control">
+							<select th:field="*{shipmentType}" class="form-control">
 								<option value="">SELECT</option>
 								<option th:each="ob:${shipmentcode}" th:value="${ob.key}"
 									th:text="${ob.value}"></option>
@@ -59,10 +58,10 @@
 							<label>Vendor</label>
 						</div>
 						<div class="col-4">
-							<select th:field="*{vendor}"  class="form-control">
+							<select th:field="*{vendor}" class="form-control">
 								<option value="">SELECT</option>
-								 <option th:each="ob:${whUsercode}" th:value="${ob.key}"
-									th:text="${ob.value}"></option> 
+								<option th:each="ob:${whUsercode}" th:value="${ob.key}"
+									th:text="${ob.value}"></option>
 							</select>
 						</div>
 						<div class="col-6">
@@ -107,7 +106,8 @@
 							<label for="status"> Status</label>
 						</div>
 						<div class="col-4">
-							<input type="text" th:field="*{defaultStatus}" class="form-control"
+							<input type="text" th:field="*{defaultStatus}"
+								class="form-control"
 								th:value="${purchaseOrder.setDefaultStatus('OPEN')}"
 								readonly="readonly" />
 						</div>
@@ -149,5 +149,213 @@
 
 	</div>
 	<!-- container end -->
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#orderCodeError").hide();
+							$("#shipmentTypeError").hide();
+							$("#vendorError").hide();
+							$("#referenceNumberError").hide();
+							$("#qualityCheckError").hide();
+							$("#defaultStatusError").hide();
+							$("#descriptionError").hide();
+
+							var orderCodeError = false;
+							var shipmentTypeError = false;
+							var vendorError = false;
+							var referenceNumberError = false;
+							var qualityCheckError = false;
+							var defaultStatusError = false;
+							var descriptionError = false;
+							
+							
+							
+							
+							$("#orderCode").keyup(
+									function() {
+										$("#orderCode").val(
+												$("#orderCode").val()
+														.toUpperCase());
+										validate_orderCode();
+									});
+
+							$("#shipmentType").change(function() {
+								validate_shipmentType();
+							});
+							$("#vendor").change(function() {
+								validate_vendor();
+							});
+							$("#referenceNumber").keyup(function () {
+								validate_referenceNumber();
+							});
+							
+							$('input[type="radio"][name="qualityCheck"]').change(function () {
+				                validate_qualityCheck();
+				            });
+							
+							$("#defaultStatus").keyup(function () {
+								validate_defaultStatus();
+							});
+							$("#description").keyup(function() {
+								validate_description();
+							});
+							
+						//----------validate_orderCode starts--------------//
+
+							function validate_orderCode() {
+								var val = $("#orderCode").val();
+								var exp = /^[A-Z]{4,25}$/;
+								if (val == '') {
+									$("#orderCodeError").show();
+									$("#orderCodeError").html(
+											"Choose <b>Order Code Code</b>");
+									$("#orderCodeError").css("color", "red");
+									orderCodeError = false;
+								} else if (!exp.test(val)) {
+									$("#orderCodeError").show();
+									$("#orderCodeError")
+											.html(
+													" <b>Order Code should be between 4-25 Characters</b>");
+									$("#orderCodeError").css("color", "red");
+									shipmentCodeError = false;
+								} else {
+									$("#orderCodeError").hide();
+									orderCodeError = true;
+								}
+								return orderCodeError;
+							}
+							//--------validate_shipmentType--------//
+							function validate_shipmentType() {
+								var val = $("#shipmentType").val();
+								if (val == '') {
+									$("#shipmentTypeError").show();
+									$("#shipmentTypeError").html(
+											"Choose <b>Shipment Code</b>");
+									$("#shipmentTypeError").css("color",
+											"red");
+									shipmentTypeError = false;
+								} else {
+									$("#shipmentTypeError").hide();
+									shipmentTypeError = true;
+								}
+								return shipmentTypeError;
+							}
+							//--------validate_shipmentType----ENDS----//
+
+							function validate_vendor() {
+								var val = $("#vendor").val();
+								if (val == '') {
+									$("#vendorError").show();
+									$("#vendorError").html(
+											"Choose <b>Vendor</b>");
+									$("#vendorError").css("color",
+											"red");
+									vendorError = false;
+								} else {
+									$("#vendorError").hide();
+									vendorError = true;
+								}
+								return vendorError;
+							}
+							//--------validate_vendor----ENDS----//
+							
+							//--------validate_referenceNumber----STARTS----//
+							function validate_referenceNumber() {
+								var val = $("#referenceNumber").val();
+								if (val == '') {
+									$("#referenceNumberError").show();
+									$("#referenceNumberError").html(
+											"Choose <b>Reference Number Required</b>");
+									$("#referenceNumberError").css("color",
+											"red");
+									referenceNumberError = false;
+								} else {
+									$("#referenceNumberError").hide();
+									referenceNumberError = true;
+								}
+								return referenceNumberError;
+							}
+							
+							//--------validate_referenceNumber----ENDS----//
+								//--------validate_qualityCheck----STARTS----//
+							function validate_qualityCheck() {
+								var len = $('input[type="radio"][name="qualityCheck"]:checked').length;
+								if (len == 0) {
+									$("#qualityCheckError").show();
+									$("#qualityCheckError").html(
+											"Choose <b>Quality Check Required</b>");
+									$("#qualityCheckError").css("color",
+											"red");
+									qualityCheckError = false;
+								}else{
+									$("#qualityCheckError").hide();
+									qualityCheckError = true;
+								}
+								return qualityCheckError;
+							}
+							
+							//--------validate_qualityCheck----ENDS----//
+							
+								//--------validate_defaultStatus----STARTS----//
+							function validate_defaultStatus() {
+								var val = $("#status").val();
+								if (val == '') {
+									$("#defaultStatusError").show();
+									$("#defaultStatusError").html(
+											"Choose <b>Status Required</b>");
+									$("#defaultStatusError").css("color",
+											"red");
+									defaultStatusError = false;
+								} else {
+									$("#defaultStatusError").hide();
+									defaultStatusError = true;
+								}
+								return defaultStatusError;
+							}
+							//--------validate_defaultStatus----ENDS----//
+							
+							//--------validate_description----Starts----//
+							function validate_description(){
+								var val = $("#description").val();
+								
+								if(val.length < 5||val.length >150){
+									$("#descriptionError").show();
+									$("#descriptionError").html(
+											"Must be <b>5-150 characters</b>");
+									$("#descriptionError")
+											.css("color", "red");
+									descriptionError = false;
+								}else{
+									$("#descriptionError").hide();
+									descriptionError= true;
+								}
+								return descriptionError;
+							}
+							//--------validate_description----ENDS----//
+							
+							//--validate submit ---starts-----//
+							$("#purchaseOrderForm").submit(function(){							
+								validate_orderCode();						
+								validate_shipmentType();
+								validate_vendor();
+								validate_referenceNumber();
+								validate_qualityCheck();
+								validate_defaultStatus();
+								validate_description();
+								
+								if(orderCodeError && shipmentTypeError && vendorError && referenceNumberError
+										&& qualityCheckError && defaultStatusError && descriptionError ){
+									return true;
+									
+								}else{
+									return false;
+								}
+						});
+							
+							///-----validate submit ---Ends-----/
+						});
+	</script>
 </body>
 </html>

@@ -28,7 +28,7 @@
 								<th>REF NUMBER</th>
 								<th>QTY CHECK</th>
 								<th></th>
-								<th colspan="5">OPERATIONS</th>
+								<th colspan="6">OPERATIONS</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -55,6 +55,10 @@
 
 								<td><a th:href="@{/purchaseorder/pdf/{id}(id=${ob.id})}"
 									class="btn btn-secondary"><i class="fas fa-file-pdf"></i></a></td>
+
+								<td><a th:href="@{/purchaseorder/dtls/{id}(id=${ob.id})}"
+									class="btn btn-info">PARTS</a></td>
+
 							</tr>
 						</tbody>
 					</table>

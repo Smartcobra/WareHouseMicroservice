@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+</head>
+<div class="container">
+	<div class="card">
+		<div class="card-header bg-primary text-center text-white">
+			<h2>SELECT PARTS</h2>
+		</div>
+		<div class="card-body">
+
+			<table class="table">
+				<tr>
+					<th>ORDER CODE</th>
+					<th><input th:field="*{po.orderCode}" readonly="readonly"
+						class="form-control" /></th>
+
+					<th>STATUS</th>
+					<th><input th:field="*{po.defaultStatus}" readonly="readonly"
+						class="form-control" /></th>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

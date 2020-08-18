@@ -7,6 +7,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
 </head>
+<body>
 <div class="container">
 	<div class="card">
 		<div class="card-header bg-primary text-center text-white">
@@ -23,6 +24,10 @@
 					<th>STATUS</th>
 					<th><input th:field="*{po.defaultStatus}" readonly="readonly"
 						class="form-control" /></th>
+						
+						<th>id</th>
+					<th><input th:field="*{po.id}" readonly="readonly"
+						class="form-control" /></th>
 				</tr>
 			</table>
 			<hr>
@@ -33,7 +38,6 @@
 					th:object="${purchaseOrderdtl}">
 
 					<input type="hidden" th:field="*{po.id}" />
-
 					<div class="row">
 						<div class="col-2">
 							<label>SELECT PART</label>
@@ -82,7 +86,9 @@
 								<td th:text="${ob.partCode}" class="text-secondary"></td>
 								<td th:text="${ob.baseCost}" class="text-secondary"></td>
 								<td th:text="${ob.qty}" class="text-secondary"></td>
-								<td class="btn btn-danger"><a href="#">REMOVE</a></td>
+								<!-- <td><a
+									th:href="@{/purchaseorder/removePart?dtlId={dtlId}&poId={poId}(dtlId=${ob.id},poId=${po.id})}"
+									class="btn btn-danger">REMOVE </a></td> -->
 							</tr>
 					</table>
 				</div>
@@ -93,6 +99,5 @@
 		</div>
 	</div>
 </div>
-
 </body>
 </html>

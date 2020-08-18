@@ -1,5 +1,6 @@
 package in.jit.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import in.jit.model.PurchaseDtl;
+import in.jit.model.PurchaseDtlVO;
 import in.jit.model.PurchaseOrder;
 import in.jit.service.PurchaseOrderService;
 import in.jit.view.PurchaseOrderExcelView;
@@ -29,6 +32,17 @@ public class PurchaseOrderController {
 		model.addAttribute("shipmentcode", service.getShipmentIdAndCode());
 		model.addAttribute("whUsercode", service.getWhUserTypeIdAndCode());
 	}
+
+	/*
+	 * for dtls page
+	 */
+
+	private void addDorpDownUiDtls(Model model) {
+		model.addAttribute("partcode", service.getPartIdAndCode());
+		////model.addAttribute("partBaseCost", service.getPartIdAndBaseCost()); //////////////////Added
+	}
+	
+	
 
 	@GetMapping("/register")
 	public String showRegister(Model model) {
@@ -123,18 +137,65 @@ public class PurchaseOrderController {
 
 	@GetMapping("/dtls/{id}")
 	public String showPurchaseOrderDtls(@PathVariable Integer id, Model model) {
-
 		String page = null;
 		Optional<PurchaseOrder> po = service.getOnePurchaseOrder(id);
 		if (po.isPresent()) {
 			model.addAttribute("po", po);
+			addDorpDownUiDtls(model);
+			// form backing object +linked with PO
+			
+			PurchaseDtl purchaseDtl= new PurchaseDtl();
+			purchaseDtl.setPo(po.get()); ///linked with po
+			model.addAttribute("purchaseOrderdtl", purchaseDtl);
+			
+			
+			List<PurchaseDtl> purchaseDtlWithPoId = service.getPurchaseDtlWithPoId(po.get().getId());
+			
+			//convert list of PurchaseDtl to PurchaseDtlVO
+			
+			PurchaseDtlVO purchaseDtlVO = null;
+			int index=0;
+			
+			List<PurchaseDtlVO> listPurchaseDtlVO= new ArrayList<PurchaseDtlVO>();
+			for(PurchaseDtl pdtl: purchaseDtlWithPoId ) {
+				purchaseDtlVO = new PurchaseDtlVO();
+				purchaseDtlVO.setId(pdtl.getId());
+				purchaseDtlVO.setPartCode(service.getPartIdAndCode().get(Integer.valueOf(pdtl.getPart())));
+				purchaseDtlVO.setBaseCost(service.getPartIdAndBaseCost().get(Integer.valueOf(pdtl.getPart())));
+				purchaseDtlVO.setQty(pdtl.getQty());
+				listPurchaseDtlVO.add(index, purchaseDtlVO);
+				index++;
+				
+				
+			}
+			
+			
+			System.out.println(" from controller***************************************");
+			for(PurchaseDtlVO dtl:listPurchaseDtlVO) {
+				System.out.println(dtl.getPartCode());
+				System.out.println(dtl.getQty());
+			}
+			System.out.println(" from controller***************************************");
+			
+			///dispalying all added parts
+			//model.addAttribute("purchasedtlList",service.getPurchaseDtlWithPoId(po.get().getId()));
+			model.addAttribute("purchasedtlList",listPurchaseDtlVO);
 			page = "PurchaseDtls";
+			
+			
 		} else {
-			page ="redirect:../all";
+			page = "redirect:../all";
 		}
 
 		return page;
 
 	}
 
+	@PostMapping("/addpart")
+	public String addPartToPo(@ModelAttribute PurchaseDtl purchaseDtl) {
+		service.addPartToPo(purchaseDtl);
+		Integer poId = purchaseDtl.getPo().getId();
+		//service.updatePurchaseOrderStatus("PICKING", poId);
+		return "redirect:dtls/" + poId; // POID
+	}
 }

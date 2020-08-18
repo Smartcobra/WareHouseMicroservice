@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import in.jit.model.PurchaseDtl;
 import in.jit.model.PurchaseOrder;
 
 public interface PurchaseOrderService {
@@ -24,6 +25,14 @@ public interface PurchaseOrderService {
 	public Map<Integer, String> getShipmentIdAndCode();
 	
 	public Map<Integer, String> getWhUserTypeIdAndCode();
+	
+	public Map<Integer, String> getPartIdAndCode();
+	
+	public Map<Integer, String> getPartIdAndBaseCost();
+
+	public int addPartToPo(PurchaseDtl purchaseDtl);
+	
+	public List<PurchaseDtl> getPurchaseDtlWithPoId(Integer purchaseId);
 	
 	
 	

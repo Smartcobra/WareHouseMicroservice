@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,6 +26,18 @@ public class PurchaseDtl {
 	
 	@Column(name="pur_dtl_part_col")
 	private String part;
+	
+	@ManyToOne
+	@JoinColumn(name="po_id_fk")
+	private PurchaseOrder po;
+
+	public PurchaseOrder getPo() {
+		return po;
+	}
+
+	public void setPo(PurchaseOrder po) {
+		this.po = po;
+	}
 
 	public Integer getId() {
 		return id;

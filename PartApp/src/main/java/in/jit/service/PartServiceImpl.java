@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import in.jit.model.Part;
+import in.jit.model.PartVO;
 import in.jit.model.UomVO;
 import in.jit.repo.PartRepository;
 
@@ -95,6 +96,34 @@ public class PartServiceImpl implements PartService {
 		Map<Integer, String> map = list.stream().collect(Collectors.toMap(UomVO::getId, UomVO::getUomModel));
 		return map;
 
+	}
+
+	@Override
+	public List<PartVO> getPartCodeAndBaseCost() {
+		PartVO partVO = null;
+		List<PartVO> partVoList = new ArrayList<PartVO>();
+		int index = 0;
+
+		List<Object[]> listPart = repo.getPartCodeAndBaseCost();
+		for (Object[] l : listPart) {
+			partVO = new PartVO();
+			partVO.setId(Integer.valueOf(l[0].toString()));
+			// System.out.println(">>>>>l0>>>>"+l[0]);
+			partVO.setPartCode(l[1].toString());
+			partVO.setBaseCost(String.valueOf(l[2]));
+			partVoList.add(index, partVO);
+			index++;
+			// System.out.println(">>>>>l1>>>"+l[1]);
+		}
+
+		System.out.println("getShipmentIdAndCode--shipmentTypleist");
+		for (int i = 0; i < partVoList.size(); i++) {
+			System.out.println(partVoList.get(i).getId());
+			System.out.println(partVoList.get(i).getPartCode());
+			System.out.println(partVoList.get(i).getBaseCost());
+		}
+
+		return partVoList;
 	}
 	
 	

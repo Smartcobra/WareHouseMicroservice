@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 import in.jit.model.Part;
+import in.jit.model.PartVO;
 
 
 public interface PartService {
@@ -30,6 +31,8 @@ public interface PartService {
 	//public List<UomVO> partUom();
 	
 	public Map<Integer, String> getUomIdAndModel();
+	
+	public List<PartVO> getPartCodeAndBaseCost();
 	
 	
 	

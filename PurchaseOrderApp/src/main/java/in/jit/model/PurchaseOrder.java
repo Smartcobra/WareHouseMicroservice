@@ -1,40 +1,58 @@
 package in.jit.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="purchase_order_tab")
+@Table(name = "purchase_order_tab")
 public class PurchaseOrder {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="porder_id_col")
+	@Column(name = "porder_id_col")
 	private Integer id;
-	
-	@Column(name="porder_Code_col")
+
+	@Column(name = "porder_Code_col")
 	private String orderCode;
-	
-	@Column(name="porder_ref_number_col")
+
+	@Column(name = "porder_ref_number_col")
 	private String referenceNumber;
-	
-	@Column(name="porder_qlty_chk_col")
+
+	@Column(name = "porder_qlty_chk_col")
 	private String qualityCheck;
-    
-	@Column(name="porder_def_status_col")
+
+	@Column(name = "porder_def_status_col")
 	private String defaultStatus;
-	
-	@Column(name="porder_desc_col")
+
+	@Column(name = "porder_desc_col")
 	private String description;
-	
-	@Column(name="porder_shipment_type_col")
+
+	@Column(name = "porder_shipment_type_col")
 	private String shipmentType;
-	
-	@Column(name="porder_vendor_col")
+
+	@Column(name = "porder_vendor_col")
 	private String vendor;
+
+	// Bidirectional mapping
+	
+	  @OneToMany(mappedBy = "po", fetch = FetchType.EAGER) private
+	  List<PurchaseDtl> dtls;
+	 
+
+	public List<PurchaseDtl> getDtls() {
+		return dtls;
+	}
+
+	public void setDtls(List<PurchaseDtl> dtls) {
+		this.dtls = dtls;
+	}
 
 	public Integer getId() {
 		return id;
@@ -84,8 +102,6 @@ public class PurchaseOrder {
 		this.description = description;
 	}
 
-	
-
 	public String getShipmentType() {
 		return shipmentType;
 	}
@@ -101,6 +117,5 @@ public class PurchaseOrder {
 	public void setVendor(String vendor) {
 		this.vendor = vendor;
 	}
-	
-	
+
 }

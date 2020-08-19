@@ -103,9 +103,9 @@
 							<label for="status"> Status</label>
 						</div>
 						<div class="col-4">
-							<input type="text" th:field="*{defaultStatus}"
+							<input type="text" th:field="*{status}"
 								class="form-control"
-								th:value="${purchaseOrder.setDefaultStatus('OPEN')}"
+								th:value="${purchaseOrder.setStatus('OPEN')}"
 								readonly="readonly" />
 						</div>
 						<div class="col-6">

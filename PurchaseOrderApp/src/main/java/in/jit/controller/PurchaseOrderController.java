@@ -21,6 +21,7 @@ import in.jit.model.PurchaseOrder;
 import in.jit.service.PurchaseOrderService;
 import in.jit.view.PurchaseOrderExcelView;
 import in.jit.view.PurchaseOrderPdfView;
+import in.jit.view.VendorInvoicePdf;
 
 @Controller
 @RequestMapping("/purchaseorder")
@@ -215,8 +216,25 @@ public class PurchaseOrderController {
 		Integer dtlCount = service.getPurchaseDtlWithPoIdCount(id);
 		System.out.println(">>>>>>>>>>>>>>placeOrder>>>>>>>>>> dtlCount::"+dtlCount);
 		if (dtlCount > 0) {
-			service.updatePurchaseOrderStatus("ORDERD", id);
+			service.updatePurchaseOrderStatus("ORDERED", id);
 		}
 		return "redirect:../dtls/" + id;
+	}
+	
+	@GetMapping("/invoiceOrder/{id}")
+	public String invoiceOrder(@PathVariable Integer id)
+	{
+		service.updatePurchaseOrderStatus("INVOICED",id);
+		return "redirect:../all"; //POID
+	}
+	
+	
+	@GetMapping("/printInvoice/{id}")
+	public ModelAndView printInvoice(@PathVariable Integer id)
+	{
+		ModelAndView m = new ModelAndView();
+		m.setView(new VendorInvoicePdf());
+		m.addObject("po", service.getOnePurchaseOrder(id).get());
+		return m;
 	}
 }

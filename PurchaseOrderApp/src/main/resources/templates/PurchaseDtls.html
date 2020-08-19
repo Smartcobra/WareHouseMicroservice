@@ -88,13 +88,18 @@
 									<td th:text="${ob.baseCost}" class="text-secondary"></td>
 									<td th:text="${ob.qty}" class="text-secondary"></td>
 									<td th:if="${po.status =='PICKING'}"><a
-									th:href="@{/purchaseorder/removePart?dtlId={dtlId}&poId={poId}(dtlId=${ob.id},poId=${po.id})}"
-									class="btn btn-danger">REMOVE </a></td>
+										th:href="@{/purchaseorder/removePart?dtlId={dtlId}&poId={poId}(dtlId=${ob.id},poId=${po.id})}"
+										class="btn btn-danger">REMOVE </a></td>
 								</tr>
 						</table>
 						<div th:if="${po.status =='PICKING'}" align="center">
 							<a th:href="@{/purchaseorder/confirmOrder/{id}(id=${po.id})}"
 								class="btn btn-success">CONFIRM</a>
+						</div>
+						<div th:if="${po.status =='ORDERED'}" align="center">
+							<b>TOTAL ITEMS PLACED IN ORDER : <span
+								th:text="${purchasedtlList.size()}"></span>
+							</b>
 						</div>
 					</div>
 

@@ -106,13 +106,13 @@
 							<label for="status"> Status</label>
 						</div>
 						<div class="col-4">
-							<input type="text" th:field="*{defaultStatus}"
+							<input type="text" th:field="*{status}"
 								class="form-control"
-								th:value="${purchaseOrder.setDefaultStatus('OPEN')}"
+								th:value="${purchaseOrder.setStatus('OPEN')}"
 								readonly="readonly" />
 						</div>
 						<div class="col-6">
-							<span id="defaultStatusError"></span>
+							<span id="statusError"></span>
 						</div>
 					</div>
 					<!-- row#5 -->
@@ -159,7 +159,7 @@
 							$("#vendorError").hide();
 							$("#referenceNumberError").hide();
 							$("#qualityCheckError").hide();
-							$("#defaultStatusError").hide();
+							$("#statusError").hide();
 							$("#descriptionError").hide();
 
 							var orderCodeError = false;
@@ -167,7 +167,7 @@
 							var vendorError = false;
 							var referenceNumberError = false;
 							var qualityCheckError = false;
-							var defaultStatusError = false;
+							var statusError = false;
 							var descriptionError = false;
 							
 							
@@ -195,8 +195,8 @@
 				                validate_qualityCheck();
 				            });
 							
-							$("#defaultStatus").keyup(function () {
-								validate_defaultStatus();
+							$("#statusError").keyup(function () {
+								validate_statusError();
 							});
 							$("#description").keyup(function() {
 								validate_description();
@@ -299,20 +299,20 @@
 							//--------validate_qualityCheck----ENDS----//
 							
 								//--------validate_defaultStatus----STARTS----//
-							function validate_defaultStatus() {
+							function validate_status() {
 								var val = $("#status").val();
 								if (val == '') {
-									$("#defaultStatusError").show();
-									$("#defaultStatusError").html(
+									$("#statusError").show();
+									$("#statusError").html(
 											"Choose <b>Status Required</b>");
-									$("#defaultStatusError").css("color",
+									$("#statusError").css("color",
 											"red");
-									defaultStatusError = false;
+									statusError = false;
 								} else {
-									$("#defaultStatusError").hide();
-									defaultStatusError = true;
+									$("#statusError").hide();
+									statusError = true;
 								}
-								return defaultStatusError;
+								return statusError;
 							}
 							//--------validate_defaultStatus----ENDS----//
 							
@@ -342,11 +342,11 @@
 								validate_vendor();
 								validate_referenceNumber();
 								validate_qualityCheck();
-								validate_defaultStatus();
+								validate_status();
 								validate_description();
 								
 								if(orderCodeError && shipmentTypeError && vendorError && referenceNumberError
-										&& qualityCheckError && defaultStatusError && descriptionError ){
+										&& qualityCheckError && statusError && descriptionError ){
 									return true;
 									
 								}else{

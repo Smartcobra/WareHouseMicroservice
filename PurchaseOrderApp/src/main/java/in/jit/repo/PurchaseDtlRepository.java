@@ -12,4 +12,9 @@ public interface PurchaseDtlRepository extends JpaRepository<PurchaseDtl, Intege
 
 	@Query("SELECT PDTL FROM PurchaseDtl PDTL INNER JOIN PDTL.po as PO WHERE PO.id=:purchaseId")
 	public List<PurchaseDtl> getPurchaseDtlWithPoId(Integer purchaseId);
+	
+	@Query("SELECT COUNT(PDTL) FROM PurchaseDtl PDTL INNER JOIN PDTL.po as PO WHERE PO.id=:purchaseId")
+	public Integer getPurchaseDtlWithPoIdCount (Integer purchaseId);
+	
+	
 }

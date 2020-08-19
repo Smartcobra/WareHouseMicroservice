@@ -29,7 +29,7 @@ public class PurchaseOrder {
 	private String qualityCheck;
 
 	@Column(name = "porder_def_status_col")
-	private String defaultStatus;
+	private String status;
 
 	@Column(name = "porder_desc_col")
 	private String description;
@@ -86,12 +86,12 @@ public class PurchaseOrder {
 		this.qualityCheck = qualityCheck;
 	}
 
-	public String getDefaultStatus() {
-		return defaultStatus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setDefaultStatus(String defaultStatus) {
-		this.defaultStatus = defaultStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getDescription() {

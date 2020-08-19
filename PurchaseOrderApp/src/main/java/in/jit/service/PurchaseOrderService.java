@@ -33,7 +33,13 @@ public interface PurchaseOrderService {
 	public int addPartToPo(PurchaseDtl purchaseDtl);
 	
 	public List<PurchaseDtl> getPurchaseDtlWithPoId(Integer purchaseId);
+
+	public void deletePurchaseDtl(Integer dtlId);
 	
+	public void updatePurchaseOrderStatus(String status,Integer id);
+	
+	public Integer getPurchaseDtlWithPoIdCount (Integer purchaseId);
+
 	
 	
 	

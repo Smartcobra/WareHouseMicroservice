@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import in.jit.model.PurchaseDtl;
@@ -24,7 +25,6 @@ import in.jit.view.PurchaseOrderPdfView;
 @Controller
 @RequestMapping("/purchaseorder")
 public class PurchaseOrderController {
-
 	@Autowired
 	private PurchaseOrderService service;
 
@@ -39,10 +39,9 @@ public class PurchaseOrderController {
 
 	private void addDorpDownUiDtls(Model model) {
 		model.addAttribute("partcode", service.getPartIdAndCode());
-		////model.addAttribute("partBaseCost", service.getPartIdAndBaseCost()); //////////////////Added
+		//// model.addAttribute("partBaseCost", service.getPartIdAndBaseCost());
+		//// //////////////////Added
 	}
-	
-	
 
 	@GetMapping("/register")
 	public String showRegister(Model model) {
@@ -140,24 +139,23 @@ public class PurchaseOrderController {
 		String page = null;
 		Optional<PurchaseOrder> po = service.getOnePurchaseOrder(id);
 		if (po.isPresent()) {
-			model.addAttribute("po", po);
+			model.addAttribute("po", po.get());
 			addDorpDownUiDtls(model);
 			// form backing object +linked with PO
-			
-			PurchaseDtl purchaseDtl= new PurchaseDtl();
-			purchaseDtl.setPo(po.get()); ///linked with po
+
+			PurchaseDtl purchaseDtl = new PurchaseDtl();
+			purchaseDtl.setPo(po.get()); /// linked with po
 			model.addAttribute("purchaseOrderdtl", purchaseDtl);
-			
-			
+
 			List<PurchaseDtl> purchaseDtlWithPoId = service.getPurchaseDtlWithPoId(po.get().getId());
-			
-			//convert list of PurchaseDtl to PurchaseDtlVO
-			
+
+			// convert list of PurchaseDtl to PurchaseDtlVO
+
 			PurchaseDtlVO purchaseDtlVO = null;
-			int index=0;
-			
-			List<PurchaseDtlVO> listPurchaseDtlVO= new ArrayList<PurchaseDtlVO>();
-			for(PurchaseDtl pdtl: purchaseDtlWithPoId ) {
+			int index = 0;
+
+			List<PurchaseDtlVO> listPurchaseDtlVO = new ArrayList<PurchaseDtlVO>();
+			for (PurchaseDtl pdtl : purchaseDtlWithPoId) {
 				purchaseDtlVO = new PurchaseDtlVO();
 				purchaseDtlVO.setId(pdtl.getId());
 				purchaseDtlVO.setPartCode(service.getPartIdAndCode().get(Integer.valueOf(pdtl.getPart())));
@@ -165,24 +163,24 @@ public class PurchaseOrderController {
 				purchaseDtlVO.setQty(pdtl.getQty());
 				listPurchaseDtlVO.add(index, purchaseDtlVO);
 				index++;
-				
-				
+
 			}
-			
-			
+
 			System.out.println(" from controller***************************************");
-			for(PurchaseDtlVO dtl:listPurchaseDtlVO) {
+			for (PurchaseDtlVO dtl : listPurchaseDtlVO) {
 				System.out.println(dtl.getPartCode());
 				System.out.println(dtl.getQty());
+				System.out.println(dtl.getId());
+
 			}
 			System.out.println(" from controller***************************************");
-			
-			///dispalying all added parts
-			//model.addAttribute("purchasedtlList",service.getPurchaseDtlWithPoId(po.get().getId()));
-			model.addAttribute("purchasedtlList",listPurchaseDtlVO);
+
+			/// dispalying all added parts
+			// model.addAttribute("purchasedtlList",service.getPurchaseDtlWithPoId(po.get().getId()));
+
+			model.addAttribute("purchasedtlList", listPurchaseDtlVO);
 			page = "PurchaseDtls";
-			
-			
+
 		} else {
 			page = "redirect:../all";
 		}
@@ -195,7 +193,30 @@ public class PurchaseOrderController {
 	public String addPartToPo(@ModelAttribute PurchaseDtl purchaseDtl) {
 		service.addPartToPo(purchaseDtl);
 		Integer poId = purchaseDtl.getPo().getId();
-		//service.updatePurchaseOrderStatus("PICKING", poId);
+		service.updatePurchaseOrderStatus("PICKING", poId);
 		return "redirect:dtls/" + poId; // POID
+	}
+
+	@GetMapping("/removePart")
+	public String removePart(@RequestParam Integer dtlId,@RequestParam Integer poId) {
+		service.deletePurchaseDtl(dtlId);
+		Integer dtlCount = service.getPurchaseDtlWithPoIdCount(poId);
+
+		if (dtlCount == 0) {
+			service.updatePurchaseOrderStatus("OPEN", poId);
+		}
+
+		return "redirect:dtls/" + poId; // POID
+	}
+	
+	@GetMapping("/confirmOrder/{id}")
+	public String placeOrder(@PathVariable Integer id) {
+		System.out.println(">>>>>>>>>>>>>>placeOrder>>>>>>>>>>");
+		Integer dtlCount = service.getPurchaseDtlWithPoIdCount(id);
+		System.out.println(">>>>>>>>>>>>>>placeOrder>>>>>>>>>> dtlCount::"+dtlCount);
+		if (dtlCount > 0) {
+			service.updatePurchaseOrderStatus("ORDERD", id);
+		}
+		return "redirect:../dtls/" + id;
 	}
 }

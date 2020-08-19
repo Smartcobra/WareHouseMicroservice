@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import in.jit.client.ClientCalls;
 import in.jit.model.PartVO;
@@ -70,43 +71,51 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public Map<Integer, String> getShipmentIdAndCode() {
 		List<ShipmentVO> shipmentTypeIdCode = clientCalls.shipmentTypeIdCode();
 		Map<Integer, String> shipmentVOMap = shipmentTypeIdCode.stream().collect(Collectors.toMap(ShipmentVO::getId, ShipmentVO::getShipmentCode));
-		shipmentVOMap.forEach((k, v) -> System.out.println(k + "::" + v));
+		//shipmentVOMap.forEach((k, v) -> System.out.println(k + "::" + v));
 		return shipmentVOMap;
 	}
 
 	@Override
 	public Map<Integer, String> getWhUserTypeIdAndCode() {
 		List<WhUserTypeVO> whUserTypeIdCode = clientCalls.whUserTypeIdCode();
-		System.out.println("from service IMPL");
-		whUserTypeIdCode.stream().forEach(System.out::println);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		/*
+		 * System.out.println("from service IMPL");
+		 * whUserTypeIdCode.stream().forEach(System.out::println);
+		 * System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		 */
 
-		for (WhUserTypeVO vo : whUserTypeIdCode) {
-			System.out.println(vo.getId());
-			System.out.println(vo.getUserCode());
-		}
+		/*
+		 * for (WhUserTypeVO vo : whUserTypeIdCode) { System.out.println(vo.getId());
+		 * System.out.println(vo.getUserCode()); }
+		 */
 		Map<Integer, String> WhUserTypeVOMap = whUserTypeIdCode.stream().collect(Collectors.toMap(WhUserTypeVO::getId, WhUserTypeVO::getUserCode));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
-		WhUserTypeVOMap.forEach((k, v) -> System.out.println(k + "::" + v));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		/*
+		 * System.out.println(">>>>>>>>>>>>>>>>>>>>>>>"); WhUserTypeVOMap.forEach((k, v)
+		 * -> System.out.println(k + "::" + v));
+		 * System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		 */
 		return WhUserTypeVOMap;
 	}
 
 	@Override
 	public Map<Integer, String> getPartIdAndCode() {
 		List<PartVO> partIdCode = clientCalls.partCodeBaseCost();
-		System.out.println("from service IMPL");
-		partIdCode.stream().forEach(System.out::println);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		/*
+		 * System.out.println("from service IMPL");
+		 * partIdCode.stream().forEach(System.out::println);
+		 * System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		 */
 
-		for (PartVO vo : partIdCode) {
-			System.out.println(vo.getId());
-			System.out.println(vo.getPartCode());
-		}
+		/*
+		 * for (PartVO vo : partIdCode) { System.out.println(vo.getId());
+		 * System.out.println(vo.getPartCode()); }
+		 */
 		Map<Integer, String> partIdMap = partIdCode.stream().collect(Collectors.toMap(PartVO::getId, PartVO::getPartCode));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
-		partIdMap.forEach((k, v) -> System.out.println(k + "::" + v));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		/*
+		 * System.out.println(">>>>>>>>>>>>>>>>>>>>>>>"); partIdMap.forEach((k, v) ->
+		 * System.out.println(k + "::" + v));
+		 * System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+		 */
 		return partIdMap;
 
 	}
@@ -123,21 +132,36 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	@Override
 	public Map<Integer, String> getPartIdAndBaseCost() {
-		List<PartVO> partIdBaseCost = clientCalls.partCodeBaseCost();
-		System.out.println("from service IMPL");
+		List<PartVO> partIdBaseCost = clientCalls.partCodeBaseCost();;
 		partIdBaseCost.stream().forEach(System.out::println);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
 
-		for (PartVO vo : partIdBaseCost) {
-			System.out.println(vo.getId());
-			System.out.println(vo.getBaseCost());
-		}
+		/*
+		 * for (PartVO vo : partIdBaseCost) { System.out.println(vo.getId());
+		 * System.out.println(vo.getBaseCost()); }
+		 */
 		Map<Integer, String> partBaseCostMap = partIdBaseCost.stream().collect(Collectors.toMap(PartVO::getId, PartVO::getBaseCost));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
 		partBaseCostMap.forEach((k, v) -> System.out.println(k + "::" + v));
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
 		return partBaseCostMap;
 
+	}
+
+	@Override
+	public void deletePurchaseDtl(Integer dtlId) {
+		purchaseDtlRepo.deleteById(dtlId);
+		
+	}
+	
+	@Transactional
+	@Override
+	public void updatePurchaseOrderStatus(String status, Integer id) {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>"+status + ">>>>>>>>>>>>>"+id);
+		repo.updatePurchaseOrderStatus(status, id);
+		
+	}
+
+	@Override
+	public Integer getPurchaseDtlWithPoIdCount(Integer purchaseId) {
+		return purchaseDtlRepo.getPurchaseDtlWithPoIdCount(purchaseId);
 	}
 
 }

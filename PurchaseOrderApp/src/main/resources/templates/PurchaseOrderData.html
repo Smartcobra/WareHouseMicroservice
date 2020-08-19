@@ -6,6 +6,7 @@
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/purchaseorder.css}"/>
 </head>
 <div class="container">
 	<div class="card">
@@ -18,11 +19,12 @@
 					class="fas fa-file-excel"></i></a> <a th:href="@{/purchaseorder/pdf}"
 					class="btn btn-secondary btn-lg "><i class="fas fa-file-pdf"></i></a>
 				<div>
-					<table class="table table-bordered">
+					<table class="table table-bordered table-condensed">
 						<thead class="thead-dark">
 							<tr>
 								<th>ORDER ID</th>
 								<th>ORDER CODE</th>
+								<th>STATUS</th>
 								<th>SHIPMENT CODE</th>
 								<th>VENDOR</th>
 								<th>REF NUMBER</th>
@@ -35,6 +37,7 @@
 							<tr th:each="ob:${list}">
 								<td th:text="${ob.id}"></td>
 								<td th:text="${ob.orderCode}"></td>
+								<td th:text="${ob.status}"></td>
 								<td th:text="${ob.shipmentType}"></td>
 								<td th:text="${ob.vendor}"></td>
 								<td th:text="${ob.referenceNumber}"></td>

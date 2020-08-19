@@ -8,96 +8,101 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
 </head>
 <body>
-<div class="container">
-	<div class="card">
-		<div class="card-header bg-primary text-center text-white">
-			<h2>SELECT PARTS</h2>
-		</div>
-		<div class="card-body">
-
-			<table class="table">
-				<tr>
-					<th>ORDER CODE</th>
-					<th><input th:field="*{po.orderCode}" readonly="readonly"
-						class="form-control" /></th>
-
-					<th>STATUS</th>
-					<th><input th:field="*{po.defaultStatus}" readonly="readonly"
-						class="form-control" /></th>
-						
-						<th>id</th>
-					<th><input th:field="*{po.id}" readonly="readonly"
-						class="form-control" /></th>
-				</tr>
-			</table>
-			<hr>
-			<div>
-				<h3>ADD PARTS TO CART</h3>
-				<!-- Add Parts Form -->
-				<form th:action="@{/purchaseorder/addpart}" method="POST"
-					th:object="${purchaseOrderdtl}">
-
-					<input type="hidden" th:field="*{po.id}" />
-					<div class="row">
-						<div class="col-2">
-							<label>SELECT PART</label>
-						</div>
-						<div class="col-3">
-							<select th:field="*{part}" class="form-control">
-								<option value="">-SELECT-</option>
-								<option th:each="ob:${partcode}" th:value="${ob.key}"
-									th:text="${ob.value}"></option>
-							</select>
-						</div>
-
-						<div class="col-1">
-							<label>QTY</label>
-						</div>
-						<div class="col-3">
-							<input type="text" th:field="*{qty}" class="form-control"
-								required="required" />
-						</div>
-
-						<div class="col-2">
-							<input type="submit" class="btn btn-success" value="Add" />
-						</div>
-					</div>
-				</form>
-				<hr>
-
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-center text-white">
+				<h2>SELECT PARTS</h2>
 			</div>
+			<div class="card-body">
 
-		</div>
-		<div class="card-footer">
-			<div class="row">
-				<div class="col-2"></div>
-				<div class="col-8">
-					<table class="table table-bordered table-sm">
-						<thead class="thead-dark">
-							<tr>
-								<th>SLNO</th>
-								<th>PART CODE</th>
-								<th>BASE COST</th>
-								<th>QTY</th>
-								<th>OPERATION</th>
-							</tr>
-							<tr th:each="ob,i:${purchasedtlList}">
-								<td th:text="${i.count}" class="text-secondary"></td>
-								<td th:text="${ob.partCode}" class="text-secondary"></td>
-								<td th:text="${ob.baseCost}" class="text-secondary"></td>
-								<td th:text="${ob.qty}" class="text-secondary"></td>
-								<!-- <td><a
-									th:href="@{/purchaseorder/removePart?dtlId={dtlId}&poId={poId}(dtlId=${ob.id},poId=${po.id})}"
-									class="btn btn-danger">REMOVE </a></td> -->
-							</tr>
-					</table>
+				<table class="table">
+					<tr>
+						<th>ORDER CODE</th>
+						<th><input th:field="*{po.orderCode}" readonly="readonly"
+							class="form-control" /></th>
+
+						<th>STATUS</th>
+						<th><input th:field="*{po.status}" readonly="readonly"
+							class="form-control" /></th>
+					</tr>
+				</table>
+
+				<hr>
+				<div th:if="${po.status == 'OPEN' || po.status =='PICKING'}">
+					<h3>ADD PARTS TO CART</h3>
+
+
+					<!-- Add Parts Form -->
+					<form th:action="@{/purchaseorder/addpart}" method="POST"
+						th:object="${purchaseOrderdtl}">
+
+						<input type="hidden" th:field="*{po.id}" />
+						<div class="row">
+							<div class="col-2">
+								<label>SELECT PART</label>
+
+							</div>
+							<div class="col-3">
+								<select th:field="*{part}" class="form-control">
+									<option value="">-SELECT-</option>
+									<option th:each="ob:${partcode}" th:value="${ob.key}"
+										th:text="${ob.value}"></option>
+								</select>
+							</div>
+
+							<div class="col-1">
+								<label>QTY</label>
+							</div>
+							<div class="col-3">
+								<input type="text" th:field="*{qty}" class="form-control"
+									required="required" />
+							</div>
+
+							<div class="col-2">
+								<input type="submit" class="btn btn-success" value="Add" />
+							</div>
+						</div>
+					</form>
+					---
+					<hr>
+
 				</div>
 
-				<div class="col-2"></div>
 			</div>
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-8">
+						<table class="table table-bordered table-sm">
+							<thead class="thead-dark">
+								<tr>
+									<th>SLNO</th>
+									<th>PART CODE</th>
+									<th>BASE COST</th>
+									<th>QTY</th>
+									<th th:if="${po.status =='PICKING'}">OPERATION</th>
+								</tr>
+								<tr th:each="ob,i:${purchasedtlList}">
+									<td th:text="${i.count}" class="text-secondary"></td>
+									<td th:text="${ob.partCode}" class="text-secondary"></td>
+									<td th:text="${ob.baseCost}" class="text-secondary"></td>
+									<td th:text="${ob.qty}" class="text-secondary"></td>
+									<td th:if="${po.status =='PICKING'}"><a
+									th:href="@{/purchaseorder/removePart?dtlId={dtlId}&poId={poId}(dtlId=${ob.id},poId=${po.id})}"
+									class="btn btn-danger">REMOVE </a></td>
+								</tr>
+						</table>
+						<div th:if="${po.status =='PICKING'}" align="center">
+							<a th:href="@{/purchaseorder/confirmOrder/{id}(id=${po.id})}"
+								class="btn btn-success">CONFIRM</a>
+						</div>
+					</div>
 
+					<div class="col-2"></div>
+				</div>
+
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>

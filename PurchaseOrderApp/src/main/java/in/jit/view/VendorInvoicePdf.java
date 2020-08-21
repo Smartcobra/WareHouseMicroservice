@@ -1,6 +1,7 @@
 package in.jit.view;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Color;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import com.lowagie.text.Document;
@@ -19,8 +21,18 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import in.jit.model.PurchaseDtl;
 import in.jit.model.PurchaseOrder;
+import in.jit.service.PurchaseOrderService;
+import in.jit.util.Utility;
 
 public class VendorInvoicePdf extends AbstractPdfView {
+	
+	@Autowired
+	private Utility utility;
+	
+	@Autowired
+	private PurchaseOrderService purchaseOrderService;
+	
+	
 	@Override
 	protected void buildPdfDocument(
 			Map<String, Object> model, 
@@ -33,6 +45,11 @@ public class VendorInvoicePdf extends AbstractPdfView {
 
 		//read po object from model
 		PurchaseOrder po = (PurchaseOrder)model.get("po");
+		///Integer id= po.getId();
+		
+		List<Integer> partCode=purchaseOrderService.getPartCodeInvoced(po.getId());
+		
+		
 		response.addHeader("Content-Disposition", "attachment;filename=PO-"+po.getOrderCode()+".pdf");
 
 		Font font = new Font(Font.HELVETICA, 20, Font.BOLD);
@@ -43,8 +60,20 @@ public class VendorInvoicePdf extends AbstractPdfView {
 		document.add(p);
 		
 		List<PurchaseDtl> dtls = po.getDtls();
+        
+		double finalCost=0;
+		Map<String,String> map=new HashMap<String,String>();
+				
+		for (Integer i: partCode) {
+			finalCost=finalCost+ Double.valueOf(utility.getPartIdAndCode().get(i));
+		}
 
-		double finalCost = 100.00;
+
+		
+		
+		
+		
+		
 
 		PdfPTable table = new PdfPTable(4);
 

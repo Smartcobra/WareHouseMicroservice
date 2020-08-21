@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import in.jit.client.ClientCalls;
+import in.jit.util.Utility;
 
 @Configuration
 public class Config {
@@ -17,5 +18,10 @@ public class Config {
 	@Bean
 	public ClientCalls createClientCalls() {
 		return new ClientCalls();
+	}
+	
+	@Bean
+	public Utility createUtility() {
+		return new Utility();
 	}
 }

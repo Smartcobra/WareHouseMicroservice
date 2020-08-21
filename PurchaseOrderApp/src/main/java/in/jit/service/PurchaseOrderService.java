@@ -39,6 +39,8 @@ public interface PurchaseOrderService {
 	public void updatePurchaseOrderStatus(String status,Integer id);
 	
 	public Integer getPurchaseDtlWithPoIdCount (Integer purchaseId);
+	
+	public List<Integer> getPartCodeInvoced(Integer poid);
 
 	
 	

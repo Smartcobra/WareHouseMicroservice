@@ -164,4 +164,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return purchaseDtlRepo.getPurchaseDtlWithPoIdCount(purchaseId);
 	}
 
+	@Override
+	public List<Integer> getPartCodeInvoced(Integer poid) {
+		return repo.getPartCodeInvoced(poid);
+	}
+
 }

@@ -1,15 +1,16 @@
 package in.jit.view;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.ss.usermodel.Color;
+ 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import com.lowagie.text.Document;
@@ -24,57 +25,54 @@ import in.jit.model.PurchaseOrder;
 import in.jit.service.PurchaseOrderService;
 import in.jit.util.Utility;
 
+@Component
 public class VendorInvoicePdf extends AbstractPdfView {
-	
+
 	@Autowired
 	private Utility utility;
-	
+
 	@Autowired
 	private PurchaseOrderService purchaseOrderService;
-	
-	
+
 	@Override
-	protected void buildPdfDocument(
-			Map<String, Object> model, 
-			Document document, 
-			PdfWriter writer,
-			HttpServletRequest request, 
-			HttpServletResponse response) 
-					throws Exception {
+	public void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		// read po object from model
+		PurchaseOrder po = (PurchaseOrder) model.get("po");
+		/// Integer id= po.getId();
+         System.out.println("INSIDE Po------>>>"+po.getId());
+		///product id and qty
+         System.out.println(">>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<"+ purchaseOrderService.hashCode());
+        
+         
+		List<Object[]> partCodeBaseCost = purchaseOrderService.getPartCodeInvoced(po.getId());
+		Map<String, Integer> mapBaseCost = partCodeBaseCost.stream().collect(Collectors.toMap(
+				array -> (array[0].toString()), 
+				array -> Integer.valueOf(array[1].toString())));
+		
+		///mapBaseCost.forEach((k, v) -> System.out.println(("mapBaseCost>>>>>>>>>"+k + "::::" + v)));
 
-		//read po object from model
-		PurchaseOrder po = (PurchaseOrder)model.get("po");
-		///Integer id= po.getId();
-		
-		List<Integer> partCode=purchaseOrderService.getPartCodeInvoced(po.getId());
-		
-		
-		response.addHeader("Content-Disposition", "attachment;filename=PO-"+po.getOrderCode()+".pdf");
+		response.addHeader("Content-Disposition", "attachment;filename=PO-" + po.getOrderCode() + ".pdf");
 
 		Font font = new Font(Font.HELVETICA, 20, Font.BOLD);
-		Paragraph p = new Paragraph("VENDOR INVOICE CODE"+po.getVendor()+"-"+po.getOrderCode(),font);
+		Paragraph p = new Paragraph("VENDOR INVOICE CODE" + po.getVendor() + "-" + po.getOrderCode(), font);
 		p.setAlignment(Element.ALIGN_CENTER);
 
-		//add element to document
+		// add element to document
 		document.add(p);
-		
+
 		List<PurchaseDtl> dtls = po.getDtls();
-        
-		double finalCost=0;
-		Map<String,String> map=new HashMap<String,String>();
-				
-		for (Integer i: partCode) {
-			finalCost=finalCost+ Double.valueOf(utility.getPartIdAndCode().get(i));
+
+		double finalCost = 0;
+		//price
+		Map<String, String> mapcodeDtls = utility.getPartIdAndCode();
+		for(Map.Entry<String, String> m :mapcodeDtls.entrySet()) {
+			System.out.println(Double.valueOf(mapBaseCost.get(m.getKey())));
+			System.out.println(Integer.valueOf(m.getValue()).doubleValue());
 		}
-
-
 		
 		
 		
-		
-		
-
 		PdfPTable table = new PdfPTable(4);
 
 		table.addCell("VENDOR CODE");
@@ -96,18 +94,17 @@ public class VendorInvoicePdf extends AbstractPdfView {
 		items.addCell("QTY");
 		items.addCell("LINE TOTAL");
 
-		for(PurchaseDtl dtl:dtls) {
+		for (PurchaseDtl dtl : dtls) {
 			items.addCell(dtl.getPart());
 			items.addCell(dtl.getPart());
 			items.addCell(dtl.getQty().toString());
-			items.addCell(String.valueOf(
-					dtl.getPart()
-					)
-					);
+			items.addCell(String.valueOf(dtl.getPart()));
 		}
 		document.add(items);
 		document.add(new Paragraph(new Date().toString()));
 	}
-
 	
+	
+	
+
 }

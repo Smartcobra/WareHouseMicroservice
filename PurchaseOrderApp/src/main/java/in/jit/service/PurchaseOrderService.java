@@ -40,7 +40,7 @@ public interface PurchaseOrderService {
 	
 	public Integer getPurchaseDtlWithPoIdCount (Integer purchaseId);
 	
-	public List<Integer> getPartCodeInvoced(Integer poid);
+	public List<Object[]> getPartCodeInvoced(Integer poid);
 
 	
 	

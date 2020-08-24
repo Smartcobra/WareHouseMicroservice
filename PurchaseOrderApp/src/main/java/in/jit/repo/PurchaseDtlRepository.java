@@ -22,4 +22,8 @@ public interface PurchaseDtlRepository extends JpaRepository<PurchaseDtl, Intege
 	public List<Object[]> getPartCodeInvoced(Integer poid);
 	
 	
+	
+	
+	
+	
 }

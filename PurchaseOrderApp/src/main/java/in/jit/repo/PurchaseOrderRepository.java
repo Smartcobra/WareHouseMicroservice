@@ -2,6 +2,8 @@ package in.jit.repo;
 
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +29,8 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, In
 	 * @Query("SELECT PDTL.part,PDTL.qty FROM PurchaseDtl PDTL INNER JOIN PDTL.po as PO WHERE PDTL.id=:poid"
 	 * ) public List<Object> getPartCodeInvoced(Integer poid);
 	 */
+	
+	@Query("SELECT PO.id,PO.orderCode FROM PurchaseOrder PO WHERE PO.status=:status")
+	public List<Object[]> getPurchaseOrderByStatus(String status);
+	
 }

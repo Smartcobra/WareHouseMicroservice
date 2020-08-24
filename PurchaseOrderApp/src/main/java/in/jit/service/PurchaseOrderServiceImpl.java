@@ -1,5 +1,6 @@
 package in.jit.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import in.jit.client.ClientCalls;
 import in.jit.model.PartVO;
 import in.jit.model.PurchaseDtl;
 import in.jit.model.PurchaseOrder;
+import in.jit.model.PurchaseOrderVO;
 import in.jit.model.ShipmentVO;
 import in.jit.model.WhUserTypeVO;
 import in.jit.repo.PurchaseDtlRepository;
@@ -171,5 +173,38 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		
 		return partCodeInvoced ;
 	}
+
+	@Override
+	public List<PurchaseOrderVO> getPurchaseOrderByStatus(String status) {
+		
+		List<Object[]> purchaseOrderByStatus = repo.getPurchaseOrderByStatus(status);
+		
+		
+		
+		PurchaseOrderVO purchaseOrderVO = null;
+		List<PurchaseOrderVO> purchaseOrderVOList = new ArrayList<PurchaseOrderVO>();
+		int index = 0;
+
+		for (Object[] l : purchaseOrderByStatus) {
+			purchaseOrderVO = new PurchaseOrderVO();
+			purchaseOrderVO.setId(Integer.valueOf(l[0].toString()));
+			// System.out.println(">>>>>l0>>>>"+l[0]);
+			purchaseOrderVO.setOrderCode(l[1].toString());
+			purchaseOrderVOList.add(index, purchaseOrderVO);
+			index++;
+			// System.out.println(">>>>>l1>>>"+l[1]);
+		}
+
+		System.out.println("purchaseorder-->>>>>>>");
+		for (int i = 0; i < purchaseOrderVOList.size(); i++) {
+			System.out.println(purchaseOrderVOList.get(i).getId());
+			System.out.println(purchaseOrderVOList.get(i).getOrderCode());
+		}
+
+		return purchaseOrderVOList;
+		
+	}
+
+	
 
 }

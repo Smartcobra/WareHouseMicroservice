@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import in.jit.model.PurchaseDtl;
 import in.jit.model.PurchaseOrder;
+import in.jit.model.PurchaseOrderVO;
 
 public interface PurchaseOrderService {
 	
@@ -41,6 +42,9 @@ public interface PurchaseOrderService {
 	public Integer getPurchaseDtlWithPoIdCount (Integer purchaseId);
 	
 	public List<Object[]> getPartCodeInvoced(Integer poid);
+	
+	public List<PurchaseOrderVO> getPurchaseOrderByStatus(String status);
+	
 
 	
 	

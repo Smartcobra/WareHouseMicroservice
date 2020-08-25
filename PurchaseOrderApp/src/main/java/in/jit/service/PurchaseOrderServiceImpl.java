@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import in.jit.client.ClientCalls;
 import in.jit.model.PartVO;
 import in.jit.model.PurchaseDtl;
+import in.jit.model.PurchaseDtlDTO;
 import in.jit.model.PurchaseOrder;
 import in.jit.model.PurchaseOrderVO;
 import in.jit.model.ShipmentVO;
@@ -203,6 +204,23 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 		return purchaseOrderVOList;
 		
+	}
+
+	@Override
+	public List<PurchaseDtlDTO> getAllPurchaseOrderDtls() {
+		 List<Object[]> allPurchaseDtls = purchaseDtlRepo.getAllPurchaseDtls();
+		 List<PurchaseDtlDTO> purchaseDTOList = new ArrayList<PurchaseDtlDTO>();
+		 int index=0;
+		 PurchaseDtlDTO purchaseDtlDTO=null;
+		 for (Object[] dtls : allPurchaseDtls) {
+			 purchaseDtlDTO = new PurchaseDtlDTO();
+			 purchaseDtlDTO.setPartCode(dtls[0].toString());
+			 purchaseDtlDTO.setQty(Integer.valueOf(dtls[1].toString()));
+			 purchaseDTOList.add(index, purchaseDtlDTO);
+				index++;
+				// System.out.println(">>>>>l1>>>"+l[1]);
+			}
+		 return purchaseDTOList;
 	}
 
 	

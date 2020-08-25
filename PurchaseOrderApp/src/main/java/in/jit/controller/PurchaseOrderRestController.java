@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.jit.model.PurchaseDtl;
+import in.jit.model.PurchaseDtlDTO;
 import in.jit.model.PurchaseOrderVO;
 import in.jit.service.PurchaseOrderService;
 
@@ -24,6 +26,15 @@ public class PurchaseOrderRestController {
 		List<PurchaseOrderVO> purchaseOrderByStatus = purchaseOrderService.getPurchaseOrderByStatus("INVOICED");
 
 		return new ResponseEntity<List<PurchaseOrderVO>>(purchaseOrderByStatus, HttpStatus.OK);
+
+	}
+	
+	
+	@GetMapping("/purchasedtls")
+	public ResponseEntity<List<PurchaseDtlDTO>> fetchAllPurchaseOrderDtls() {
+		List<PurchaseDtlDTO> allPurchaseOrderDtls = purchaseOrderService.getAllPurchaseOrderDtls();
+
+		return new ResponseEntity<List<PurchaseDtlDTO>>(allPurchaseOrderDtls, HttpStatus.OK);
 
 	}
 

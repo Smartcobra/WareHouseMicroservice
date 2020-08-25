@@ -18,9 +18,11 @@ public interface PurchaseDtlRepository extends JpaRepository<PurchaseDtl, Intege
 	
 	//@Query("SELECT PDTL.part,PDTL.qty FROM PurchaseDtl PDTL INNER JOIN PDTL.po as PO WHERE PO.id=:poid")
 	@Query(value = "SELECT  b.pur_dtl_part_col,b.pur_dtl_qty_col FROM purchaseorder.purchase_order_tab a\r\n" + 
-			"INNER JOIN purchaseorder.purchase_dtl_tab b ON a.porder_id_col=:poid;",nativeQuery = true)
+			"INNER JOIN purchaseorder.purchase_dtl_tab b WHERE a.porder_id_col=:poid;",nativeQuery = true)
 	public List<Object[]> getPartCodeInvoced(Integer poid);
 	
+	@Query("SELECT PDTL.part,PDTL.qty FROM PurchaseDtl PDTL")
+	public List<Object[]> getAllPurchaseDtls();
 	
 	
 	

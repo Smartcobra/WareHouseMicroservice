@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.jit.model.Grn;
+import in.jit.model.GrnDtl;
 import in.jit.service.GrnService;
 
 @Controller
@@ -40,6 +42,7 @@ public class GrnController {
 		Integer id = service.saveGrn(grn);
 		model.addAttribute("message", "GRN SAVED WITH ID:" + id);
 		model.addAttribute("grn", new Grn());
+		service.convertPurchaseDtlToGrnDtl(id);
 		return "GrnReg";
 	}
 
@@ -69,11 +72,11 @@ public class GrnController {
 		model.addAttribute("message", msg);
 		return "GrnData";
 	}
-	
+
 	@GetMapping("/view/{id}")
 	public String showView(@PathVariable Integer id, Model model) {
 		String page = null;
-	Optional<Grn> oneGrn = service.getOneGrn(id);
+		Optional<Grn> oneGrn = service.getOneGrn(id);
 		if (oneGrn.isPresent()) {
 			Grn order = oneGrn.get();
 			model.addAttribute("ob", order);
@@ -83,33 +86,47 @@ public class GrnController {
 		}
 		return page;
 	}
-	
-	// 5.Edit form
-		@GetMapping("/edit/{id}")
-		public String showEdit(@PathVariable Integer id, Model model) {
-			String page = null;
-			Optional<Grn> oneGrn = service.getOneGrn(id);
-			if (oneGrn.isPresent()) {
-				Grn grn = oneGrn.get();			
-				model.addAttribute("grn", grn);
-				addDorpDownUi(model);
-				page = "GrnEdit";
-			} else {
-				page = "redirect:../all";
-			}
-			return page;
-		}
 
-		// 6.update method
-		@PostMapping("/update")
-		public String update(@ModelAttribute Grn grn, Model model) {
-			String msg = null;
-			service.updateGrn(grn);
-			msg = "GRn Order '" + grn.getId() + "' updated successfully..";
-			model.addAttribute("message", msg);
-			// display other records
-			List<Grn> list = service.getAllGrns();
-			model.addAttribute("list", list);
-			return "GrnData";
+	// 5.Edit form
+	@GetMapping("/edit/{id}")
+	public String showEdit(@PathVariable Integer id, Model model) {
+		String page = null;
+		Optional<Grn> oneGrn = service.getOneGrn(id);
+		if (oneGrn.isPresent()) {
+			Grn grn = oneGrn.get();
+			model.addAttribute("grn", grn);
+			addDorpDownUi(model);
+			page = "GrnEdit";
+		} else {
+			page = "redirect:../all";
 		}
+		return page;
+	}
+
+	// 6.update method
+	@PostMapping("/update")
+	public String update(@ModelAttribute Grn grn, Model model) {
+		String msg = null;
+		service.updateGrn(grn);
+		msg = "GRn Order '" + grn.getId() + "' updated successfully..";
+		model.addAttribute("message", msg);
+		// display other records
+		List<Grn> list = service.getAllGrns();
+		model.addAttribute("list", list);
+		return "GrnData";
+	}
+
+	@GetMapping("/viewDtls/{id}")
+	public String showDtls(@PathVariable Integer id, // grnId
+			Model model) {
+		List<GrnDtl> dtls = service.getAllDtlsByGrnId(id);
+		model.addAttribute("dtls", dtls);
+		return "GrnDtlView";
+	}
+
+	@GetMapping("/status")
+	public String updateDtlStatus(@RequestParam Integer grnId, @RequestParam Integer dtlId, @RequestParam String status) {
+		service.updateStatusByGrnDtlId(status, dtlId);
+		return "redirect:viewDtls/" + grnId;
+	}
 }

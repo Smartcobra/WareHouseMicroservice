@@ -6,20 +6,29 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import in.jit.client.ClientCalls;
 import in.jit.model.Grn;
+import in.jit.model.GrnDtl;
 import in.jit.model.GrnPurchaseOrderDTO;
+import in.jit.model.PartDTO;
+import in.jit.model.PurchaseDtlDTO;
 import in.jit.model.PurchaseOrderVO;
 import in.jit.repo.GrnRepo;
+import in.jit.repo.grnDtlRepo;
 
 @Service
 public class GrnServiceImpl implements GrnService {
 
 	@Autowired
 	private GrnRepo grnRepo;
+	
+	@Autowired
+	private grnDtlRepo grnDtlRepo;
 
 	@Autowired
 	private ClientCalls clientCalls;
@@ -89,4 +98,49 @@ public class GrnServiceImpl implements GrnService {
 		return grnPurchaseOrderDTOList;
 	}
 
+	@Override
+	public void convertPurchaseDtlToGrnDtl(Integer grnId) {
+		List<PurchaseDtlDTO> PurchaseDtlDTO = clientCalls.allPurchaseOrderDtls();
+		List<PartDTO> partCodeBaseCost = clientCalls.partCodeBaseCost();
+		int index=0;
+		for(PurchaseDtlDTO all:PurchaseDtlDTO) {
+			GrnDtl grnDtl = new GrnDtl();
+			grnDtl.setPartCode(partCodeBaseCost.get(index).getPartCode());
+			grnDtl.setBaseCost(Double.valueOf(partCodeBaseCost.get(index).getBaseCost()));
+			grnDtl.setQty(all.getQty());
+			grnDtl.setLineValue(all.getQty()* grnDtl.getBaseCost());
+			
+			//link with grnDtl with Grn object (Parent)
+			Grn grn = new Grn(); 
+			grn.setId(grnId); //only ID is OK.
+			grnDtl.setGrn(grn);
+			
+			//save in Database
+			grnDtlRepo.save(grnDtl);
+			
+			index++;
+		}
+		
+		
+		
+		
+	}
+
+	@Override
+	public List<GrnDtl> getAllDtlsByGrnId(Integer grnId) {
+		
+		return grnDtlRepo.getAllDtlsByGrnId(grnId);
+	}
+
+	@Override
+	@Transactional
+	public void updateStatusByGrnDtlId(String status, Integer dtlId) {
+		grnDtlRepo.updateStatusByGrnDtlId(status, dtlId);
+		
+	}
+
+	/*
+	 * @Override public Integer saveGrnDtl(GrnDtl dtl) { // TODO Auto-generated
+	 * method stub return null; }
+	 */
 }

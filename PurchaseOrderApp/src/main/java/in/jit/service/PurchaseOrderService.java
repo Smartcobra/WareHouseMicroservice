@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import in.jit.model.PurchaseDtl;
+import in.jit.model.PurchaseDtlDTO;
 import in.jit.model.PurchaseOrder;
 import in.jit.model.PurchaseOrderVO;
 
@@ -45,6 +46,8 @@ public interface PurchaseOrderService {
 	
 	public List<PurchaseOrderVO> getPurchaseOrderByStatus(String status);
 	
+	
+	public List<PurchaseDtlDTO> getAllPurchaseOrderDtls();
 
 	
 	

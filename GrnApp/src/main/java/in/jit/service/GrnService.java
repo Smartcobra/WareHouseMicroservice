@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import in.jit.model.Grn;
+import in.jit.model.GrnDtl;
 import in.jit.model.GrnPurchaseOrderDTO;
 
 public interface GrnService {
@@ -23,5 +24,14 @@ public interface GrnService {
 	public Map<Integer, String> getOrderIdAndCode();
 	
 	public List<GrnPurchaseOrderDTO> getPurchaseOrderStatus(Boolean  status);
+	
+	
+	public void convertPurchaseDtlToGrnDtl(Integer grnId);
+	
+	//public Integer saveGrnDtl(GrnDtl dtl);
+	
+	List<GrnDtl> getAllDtlsByGrnId(Integer grnId);
+
+	public void updateStatusByGrnDtlId(String status, Integer dtlId);
 
 }

@@ -2,11 +2,13 @@ package in.jit.model;
 
 
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,7 +37,19 @@ public class Grn {
 	@Column(name="grn_pur_status_col")
 	private boolean purchaseStatus;
 	
+	@OneToMany(mappedBy = "grn")
+	private List<GrnDtl> dtls;
 	
+	
+	
+	public List<GrnDtl> getDtls() {
+		return dtls;
+	}
+
+	public void setDtls(List<GrnDtl> dtls) {
+		this.dtls = dtls;
+	}
+
 	public boolean isPurchaseStatus() {
 		return purchaseStatus;
 	}

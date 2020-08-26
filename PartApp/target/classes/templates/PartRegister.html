@@ -19,7 +19,7 @@
 			</div>
 			<!--card body  -->
 			<div class="card-body">
-				<form class="form-group" th:action="@{/part/save}" method="POST"
+				<form class="form-group" th:action="@{/warehouse/p/part/save}" method="POST"
 					th:object="${part}" id="partForm">
 					<!--row#1  -->
 
@@ -231,7 +231,7 @@
 									$("#partCodeError").show();
 									partCodeError = false;
 								} else {
-									alert("OK");
+									//alert("OK");
 									var loc = 'validatecode'; //register page
 									var id = 0; //register 
 									if ($("#id").val() !== undefined) {

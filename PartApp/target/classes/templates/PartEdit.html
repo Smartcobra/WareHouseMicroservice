@@ -19,7 +19,7 @@
 			</div>
 			<!--card body  -->
 			<div class="card-body">
-				<form th:action="@{/part/update}" method="POST" th:object="${part}"
+				<form th:action="@{/warehouse/p/part/update}" method="POST" th:object="${part}"
 					id="partForm">
 					<input type="hidden" th:field="*{id}"/>
 					<!--row#1  -->
@@ -138,7 +138,7 @@
 						</div>
 					</div>
 
-					<input type="submit" value="Create Part" class="btn btn-success">
+					<input type="submit" value="Update Part" class="btn btn-success">
 
 				</form>
 			</div>

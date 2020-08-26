@@ -35,15 +35,15 @@
 								<td th:text="${ob.baseCost}"></td>
 								<td th:text="${ob.baseCurr}"></td>
 								<td th:text="${ob.uom}"></td>
-								<td><a th:href="@{/part/edit/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/p/part/edit/{id}(id=${ob.id})}"
 									class="btn btn-success"><i class="far fa-edit"></i></a></td>
-								<td><a th:href="@{/part/view/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/p/part/view/{id}(id=${ob.id})}"
 									class="btn btn-info"><i class="far fa-eye"></i></a></td>
-								<td><a th:href="@{/part/delete/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/p/part/delete/{id}(id=${ob.id})}"
 									class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
-								<td><a th:href="@{/part/excel/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/p/part/excel/{id}(id=${ob.id})}"
 									class="btn btn-warning"><i class="fas fa-file-excel"></i></a></td>
-								<td><a th:href="@{/part/pdf/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/p/part/pdf/{id}(id=${ob.id})}"
 									class="btn btn-secondary"><i class="fas fa-file-pdf"></i></a></td>
 							</tr>
 						</tbody>

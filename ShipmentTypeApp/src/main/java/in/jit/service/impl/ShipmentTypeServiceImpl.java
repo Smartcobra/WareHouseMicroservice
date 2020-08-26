@@ -15,8 +15,10 @@ import in.jit.service.ShipmentTypeService;
 public class ShipmentTypeServiceImpl implements ShipmentTypeService {
 
 	@Autowired
-	ShipmentTypeRepository repo;
+	private ShipmentTypeRepository repo;
 
+	
+	
 	@Override
 	@Transactional
 	public Integer saveShipmentType(ShipmentType st) {

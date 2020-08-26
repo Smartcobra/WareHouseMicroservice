@@ -22,21 +22,21 @@ public class UomServiceImpl implements UomService {
 
 	
 	@Override
-	@Transactional
+	//@Transactional
 	public Integer saveUom(Uom uom) {
 		Integer id = uomrepo.save(uom).getId();
 		return id;
 	}
 
     
-	@Transactional
+	//@Transactional
 	@Override
 	public void updateUom(Uom uom) {
 		uomrepo.save(uom);
 
 	}
 
-	@Transactional
+	//@Transactional
 	@Override
 	public void deleteUom(Integer id) {
 		uomrepo.deleteById(id);

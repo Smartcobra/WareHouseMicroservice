@@ -34,9 +34,9 @@
 							<td th:text="${ob.lineValue}"></td>
 							<td>
 							<span th:if="${ob.status==null}"> 
-							<a th:href="@{/grn/status?grnId={grnId}&dtlId={dtlId}&status=ACCEPTED(grnId=${ob.grn.id},dtlId=${ob.id})}"
+							<a th:href="@{/warehouse/g/grn/status?grnId={grnId}&dtlId={dtlId}&status=ACCEPTED(grnId=${ob.grn.id},dtlId=${ob.id})}"
 									class="btn btn-success">ACCEPT</a> 
-							<a th:href="@{/grn/status?grnId={grnId}&dtlId={dtlId}&status=REJECTED(grnId=${ob.grn.id},dtlId=${ob.id})}"
+							<a th:href="@{/warehouse/g/grn/status?grnId={grnId}&dtlId={dtlId}&status=REJECTED(grnId=${ob.grn.id},dtlId=${ob.id})}"
 									class="btn btn-danger">REJECT</a>
 							</span> 
 							<b th:if="${ob.status!=null}" th:text="${ob.status}">

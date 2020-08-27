@@ -12,11 +12,11 @@
 				<h1>WELCOME TO SHIPMENTTYPE EDIT</h1>
 			</div>
 			<div class="card-body">
-				<form th:action="@{/shipmenttype/update}" method="post"
+				<form th:action="@{/warehouse/s/shipmenttype/update}" method="post"
 					th:object="${shipmentType}">
 
 					<!--  ROW#1-->
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4">
 							<label for="shipmentID">Shipment ID</label>
 						</div>
@@ -27,7 +27,7 @@
 					</div>
 
 					<!--  ROW#2-->
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4">
 							<label for="shipmentMode">Shipment Mode:</label>
 						</div>
@@ -47,7 +47,7 @@
 
 
 					<!--  ROW#3-->
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4">
 							<label for="shipmentCode">Shipment Code:</label>
 						</div>
@@ -61,7 +61,7 @@
 					</div>
 
 					<!--  ROW#4-->
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4">
 							<label for="enableShipment" t>Enable Shipment:</label>
 						</div>
@@ -79,7 +79,7 @@
 
 
 					<!-- ROW#4 -->
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4">
 							<label>Shipment Grades</label>
 						</div>
@@ -95,7 +95,7 @@
 
 
 					<!-- ROW#5 -->
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4">
 							<label for="description">Description</label>
 						</div>
@@ -108,7 +108,7 @@
 					</div>
 
 
-					<div class="row">
+					<div class="form-group row">
 						<div class="col-4"></div>
 						<div class="col-4">
 							<input type="submit" class="btn btn-success" value="Update Shipment">

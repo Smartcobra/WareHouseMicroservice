@@ -19,8 +19,8 @@
 				<h1>WELCOME TO ORDER METHOD DATA PAGE</h1>
 			</div>
 			<div class="card-body">
-			<a th:href="@{/ordermethod/excel}"class="btn btn-warning">EXCEL EXPORT</a> |
-			<a th:href="@{/ordermethod/pdf}"class="btn btn-warning">PDF EXPORT</a> 
+			<a th:href="@{/warehouse/o/ordermethod/excel}"class="btn btn-warning">EXCEL EXPORT</a> |
+			<a th:href="@{/warehouse/o/ordermethod/pdf}"class="btn btn-warning">PDF EXPORT</a> 
 				<table class="table table-bordered">
 					<thead class="thead-dark">
 						<tr class="bg-info text-white text-center">
@@ -36,9 +36,9 @@
 							<td th:text="${ob.orderCode}"></td>
 							<td th:text="${ob.description}"></td>
 							<td>
-							<a th:href="@{/ordermethod/delete/{id}(id=${ob.id})}" class="btn btn-danger">DELETE</a>
-							<a th:href="@{/ordermethod/edit/{id}(id=${ob.id})}" class="btn btn-info">EDIT</a>
-							<a th:href="@{/ordermethod/view/{id}(id=${ob.id})}" class="btn btn-info">VIEW</a>
+							<a th:href="@{/warehouse/o/ordermethod/delete/{id}(id=${ob.id})}" class="btn btn-danger">DELETE</a>
+							<a th:href="@{/warehouse/o/ordermethod/edit/{id}(id=${ob.id})}" class="btn btn-info">EDIT</a>
+							<a th:href="@{/warehouse/o/ordermethod/view/{id}(id=${ob.id})}" class="btn btn-info">VIEW</a>
 							</td>
 						</tr>
 				</table>

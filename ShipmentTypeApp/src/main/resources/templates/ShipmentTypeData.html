@@ -13,8 +13,8 @@
 			<hr>
 			<div class="card-body">
 
-				<a th:href="@{/shipmenttype/excel}" class="btn btn-warning">EXCEL
-					EXPORT</a> <a th:href="@{/shipmenttype/pdf}" class="btn btn-warning">PDF
+				<a th:href="@{/warehouse/s/shipmenttype/excel}" class="btn btn-warning">EXCEL
+					EXPORT</a> <a th:href="@{/warehouse/s/shipmenttype/pdf}" class="btn btn-warning">PDF
 					EXPORT</a>
 
 				<table class="table table-bordered">
@@ -36,16 +36,16 @@
 							<td th:text="${ob.enableShipment}"></td>
 							<td th:text="${ob.shipmentGrade}"></td>
 							<td th:text="${ob.description}"></td>
-							<td><a th:href="@{/shipmenttype/delete/{id}(id=${ob.id})}"
+							<td><a th:href="@{/warehouse/s/shipmenttype/delete/{id}(id=${ob.id})}"
 								class="btn btn-danger">DELETE</a> 
 								<a
-								th:href="@{/shipmenttype/edit/{id}(id=${ob.id})}"
+								th:href="@{/warehouse/s/shipmenttype/edit/{id}(id=${ob.id})}"
 								class="btn btn-info">EDIT</a> 
 								<a
-								th:href="@{/shipmenttype/excel/{id}(id=${ob.id})}"
+								th:href="@{/warehouse/s/shipmenttype/excel/{id}(id=${ob.id})}"
 								class="btn btn-success">Excel</a> 
 								<a
-								th:href="@{/shipmenttype/pdf/{id}(id=${ob.id})}"
+								th:href="@{/warehouse/s/shipmenttype/pdf/{id}(id=${ob.id})}"
 								class="btn btn-success">PDF</a>
 								</td>
 

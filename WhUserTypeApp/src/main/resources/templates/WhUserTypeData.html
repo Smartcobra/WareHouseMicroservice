@@ -13,7 +13,7 @@
 			<div class="card-body">
 
 				<a th:href="@{/whusertype/excel}" class="btn btn-warning">EXCEL
-					EXPORT</a> <a th:href="@{/whusertype/pdf}" class="btn btn-warning">PDF
+					EXPORT</a> <a th:href="@{/warehouse/w/whusertype/pdf}" class="btn btn-warning">PDF
 					EXPORT</a>
 
 				<table class="table table-bordered">
@@ -33,16 +33,16 @@
 							<td th:text="${ob.userMail}"></td>
 							
 							
-							<td><a th:href="@{/whusertype/delete/{id}(id=${ob.id})}"
+							<td><a th:href="@{/warehouse/w/whusertype/delete/{id}(id=${ob.id})}"
 								class="btn btn-danger">DELETE</a>
 								 <a
-								th:href="@{/whusertype/edit/{id}(id=${ob.id})}"
+								th:href="@{/warehouse/w/whusertype/edit/{id}(id=${ob.id})}"
 								class="btn btn-info">EDIT</a>
 								 <a
-								th:href="@{/whusertype/excel/{id}(id=${ob.id})}"
+								th:href="@{/warehouse/w/whusertype/excel/{id}(id=${ob.id})}"
 								class="btn btn-success">Excel</a>
 								 <a
-								th:href="@{/whusertype/pdf/{id}(id=${ob.id})}"
+								th:href="@{/warehouse/w/whusertype/pdf/{id}(id=${ob.id})}"
 								class="btn btn-success">PDF</a>
 								</td>
 

@@ -15,8 +15,9 @@
 		</div>
 		<div class="card-body">
 			<div class="form-group">
-				<a th:href="@{/purchaseorder/excel}" class="btn btn-warning btn-lg "><i
-					class="fas fa-file-excel"></i></a> <a th:href="@{/purchaseorder/pdf}"
+				<a th:href="@{/warehouse/po/purchaseorder/excel}" class="btn btn-warning btn-lg "><i
+					class="fas fa-file-excel"></i></a> |
+					<a th:href="@{/warehouse/po/purchaseorder/pdf}"
 					class="btn btn-secondary btn-lg "><i class="fas fa-file-pdf"></i></a>
 				<div>
 					<table class="table table-bordered table-condensed">
@@ -43,11 +44,11 @@
 								<td th:text="${ob.referenceNumber}"></td>
 								<td th:text="${ob.qualityCheck}"></td>
 
-								<td><a th:href="@{/purchaseorder/edit/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/po/purchaseorder/edit/{id}(id=${ob.id})}"
 									class="btn btn-success"> <i class="far fa-edit"></i>
 								</a></td>
 
-								<td><a th:href="@{/purchaseorder/view/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/po/purchaseorder/view/{id}(id=${ob.id})}"
 									class="btn btn-info"><i class="far fa-eye"></i></a></td>
 
 								<!-- <td><a th:href="@{/purchaseorder/delete/{id}(id=${ob.id})}"
@@ -59,7 +60,7 @@
 								<td><a th:href="@{/purchaseorder/pdf/{id}(id=${ob.id})}"
 									class="btn btn-secondary"><i class="fas fa-file-pdf"></i></a></td> -->
 
-								<td><a th:href="@{/purchaseorder/dtls/{id}(id=${ob.id})}"
+								<td><a th:href="@{/warehouse/po/purchaseorder/dtls/{id}(id=${ob.id})}"
 									class="btn btn-info">PARTS</a></td>
 									
 									
@@ -67,10 +68,10 @@
 									
 									<td><div th:switch="${ob.status}">
 								  <span th:case="${'ORDERED'}">
-									<a th:href="@{/purchaseorder/invoiceOrder/{id}(id=${ob.id})}" class="btn btn-info">GENERATE INVOICE</a>
+									<a th:href="@{/warehouse/po/purchaseorder/invoiceOrder/{id}(id=${ob.id})}" class="btn btn-info">GENERATE INVOICE</a>
 								  </span>
 								  <span th:case="${'INVOICED'}">
-									<a th:href="@{/purchaseorder/printInvoice/{id}(id=${ob.id})}" class="btn btn-success">PRINT INVOICE</a>
+									<a th:href="@{/warehouse/po/purchaseorder/printInvoice/{id}(id=${ob.id})}" class="btn btn-success">PRINT INVOICE</a>
 								  </span>
 								  <span th:case="${'PICKING'}">
 									<b>UNDER SELECTION</b>

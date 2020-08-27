@@ -17,8 +17,9 @@
 			<div class="card-body">
 				<div class="row form-group">
 					<div class="col-md-12 panel">
-						<a th:href="@{/grn/excel}" class="btn btn-warning btn-lg "><i
-							class="fas fa-file-excel"></i></a> <a th:href="@{/grn/pdf}"
+						<a th:href="@{/warehouse/g/grn/excel}" class="btn btn-warning btn-lg "><i
+							class="fas fa-file-excel"></i></a>
+							 <a th:href="@{/warehouse/g/grn/pdf}"
 							class="btn btn-primary btn-lg "><i class="fas fa-file-pdf"></i></a>
 					</div>
 				</div>
@@ -39,17 +40,17 @@
 							<td th:text="${ob.grnCode}"></td>
 							<td th:text="${ob.grnType}"></td>
 							<td th:text="${ob.orderCode}"></td>
-							<td><a th:href="@{/grn/edit/{id}(id=${ob.id})}"
+							<td><a th:href="@{/warehouse/g/grn/edit/{id}(id=${ob.id})}"
 								class="btn btn-success"><i class="far fa-edit"></i></a></td>
-							<td><a th:href="@{/grn/view/{id}(id=${ob.id})}"
+							<td><a th:href="@{/warehouse/g/grn/view/{id}(id=${ob.id})}"
 								class="btn btn-info"><i class="far fa-eye"></i></a></td>
-							<td><a th:href="@{/grn/delete/{id}(id=${ob.id})}"
+							<td><a th:href="@{/warehouse/g/grn/delete/{id}(id=${ob.id})}"
 								class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
 							<!-- <td><a th:href="@{/grn/excel/{id}(id=${ob.id})}"
 								class="btn btn-warning"><i class="fas fa-file-excel"></i></a></td>
 							<td><a th:href="@{/grn/pdf/{id}(id=${ob.id})}"
 								class="btn btn-primary"><i class="fas fa-file-pdf"></i></a></td> -->
-							<td><a th:href="@{/grn/viewDtls/{id}(id=${ob.id})}"
+							<td><a th:href="@{/warehouse/g/grn/viewDtls/{id}(id=${ob.id})}"
 								class="btn btn-primary">VEIW PARTS</a></td>
 
 						</tr>

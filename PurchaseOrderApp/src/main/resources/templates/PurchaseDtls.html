@@ -33,7 +33,7 @@
 
 
 					<!-- Add Parts Form -->
-					<form th:action="@{/purchaseorder/addpart}" method="POST"
+					<form th:action="@{/warehouse/po/purchaseorder/addpart}" method="POST"
 						th:object="${purchaseOrderdtl}">
 
 						<input type="hidden" th:field="*{po.id}" />
@@ -93,7 +93,7 @@
 								</tr>
 						</table>
 						<div th:if="${po.status =='PICKING'}" align="center">
-							<a th:href="@{/purchaseorder/confirmOrder/{id}(id=${po.id})}"
+							<a th:href="@{/warehouse/po/purchaseorder/confirmOrder/{id}(id=${po.id})}"
 								class="btn btn-success">CONFIRM</a>
 						</div>
 						<div th:if="${po.status =='ORDERED'}" align="center">

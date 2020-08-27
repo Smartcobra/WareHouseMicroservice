@@ -13,8 +13,8 @@
 			<hr>
 			<div class="card-body">
 
-				<a th:href="@{/uom/excel}" class="btn btn-warning">EXCEL EXPORT</a>
-				<a th:href="@{/uom/pdf}" class="btn btn-warning">PDF EXPORT</a>
+				<a th:href="@{/warehouse/u/uom/excel}" class="btn btn-warning">EXCEL EXPORT</a>
+				<a th:href="@{/warehouse/u/uom/pdf}" class="btn btn-warning">PDF EXPORT</a>
 
 				<table class="table table-bordered">
 					<thead class="thead-dark">
@@ -31,13 +31,15 @@
 							<td th:text="${ob.uomType}"></td>
 							<td th:text="${ob.uomModel}"></td>
 							<td th:text="${ob.description}"></td>
-							<td><a th:href="@{/uom/delete/{id}(id=${ob.id})}"
-								class="btn btn-danger">DELETE</a> 
+							<td>
+							    <a 
+							  th:href="@{/warehouse/u/uom/delete/{id}(id=${ob.id})}"class="btn btn-danger">DELETE
+							    </a> 
 								<a
-								th:href="@{/uom/edit/{id}(id=${ob.id})}" class="btn btn-info">EDIT
+								th:href="@{/warehouse/u/uom/edit/{id}(id=${ob.id})}" class="btn btn-info">EDIT
 								</a>
 								<a
-								th:href="@{/uom/view/{id}(id=${ob.id})}" class="btn btn-info">VIEW
+								th:href="@{/warehouse/u/uom/view/{id}(id=${ob.id})}" class="btn btn-info">VIEW
 								</a>
 
 							</td>

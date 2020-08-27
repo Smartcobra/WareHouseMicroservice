@@ -27,7 +27,12 @@ public class PartServiceImpl implements PartService {
 	@Autowired
 	RestTemplate restTemplate;
 
-	String partURL = "http://localhost:8300/rest/uom/all";
+	//String partURL = "http://localhost:8300/rest/uom/all";
+	
+	//public static final String UOMPARTURL = "http://localhost:8300/rest/uom/all";
+	public static final String UOMPARTURL = "http://UOM-SERVICE/rest/uom/all";
+	
+	
 
 	@Override
 	public Integer savePart(Part p) {
@@ -76,7 +81,7 @@ public class PartServiceImpl implements PartService {
 
 	private List<UomVO> partUom() {
 		List<UomVO> listuomVO = new ArrayList<UomVO>();
-		ResponseEntity<List<UomVO>> response = restTemplate.exchange(partURL, HttpMethod.GET, null,
+		ResponseEntity<List<UomVO>> response = restTemplate.exchange(UOMPARTURL, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<UomVO>>() {
 				});
 		listuomVO = response.getBody();

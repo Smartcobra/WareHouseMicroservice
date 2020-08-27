@@ -22,9 +22,19 @@ public class ClientCalls {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	public static final String PURCHASEORDERURL = "http://localhost:8600/purchaseorder/rest/status";
-	public static final String PARTCODEBASECOSTURL = "http://localhost:8500/part/rest/partcodebasecost";
-	public static final String PURCHASEORDERDTLSURL = "http://localhost:8600/purchaseorder/rest/purchasedtls";
+	/*
+	 * public static final String PURCHASEORDERURL="http://localhost:8600/purchaseorder/rest/status";
+	 * 
+	 * public static final String PARTCODEBASECOSTURL="http://localhost:8500/part/rest/partcodebasecost";
+	 * 
+	 * public static final String PURCHASEORDERDTLSURL="http://localhost:8600/purchaseorder/rest/purchasedtls";
+	 * 
+	 */
+	
+	public static final String PURCHASEORDERURL = "http://PURCHASEORDER-SERVICE/purchaseorder/rest/status";
+	public static final String PARTCODEBASECOSTURL = "http://PARTAPP-SERVICE/part/rest/partcodebasecost";
+	public static final String PURCHASEORDERDTLSURL = "http://PURCHASEORDER-SERVICE/purchaseorder/rest/purchasedtls";
+	
 	
 	
 	public List<PurchaseOrderVO> purchaseOrderCode() {

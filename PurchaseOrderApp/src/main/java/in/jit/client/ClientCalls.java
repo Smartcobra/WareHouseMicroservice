@@ -20,21 +20,30 @@ import in.jit.service.PurchaseOrderService;
 
 @Component
 public class ClientCalls {
-
+   
 	@Autowired
 	RestTemplate restTemplate;
 
 	@Autowired
 	PurchaseOrderService service;
 
+	/*
 	String partURL = "http://localhost:8100/rest/shipmentcode";
 	public static final String WHUSERTYPEIDCODEURL = "http://localhost:8400/rest/whusertypecode";
 	public static final String PARTCODEBASECOSTURL = "http://localhost:8500/part/rest/partcodebasecost";
 	public static final String GRNSTATUSURL = "http://localhost:8700/rest/grn/status";
+	*/
+	
+	public static final String SHIPMENTPARTURL = "http://SHIPMENTTYPE-SERVICE/rest/shipmentcode";
+	public static final String WHUSERTYPEIDCODEURL = "http://WHUSERTYPE-SERVICE/rest/whusertypecode";
+	public static final String PARTCODEBASECOSTURL = "http://PARTAPP-SERVICE/part/rest/partcodebasecost";
+	public static final String GRNSTATUSURL = "http://GRN-SERVICE/rest/grn/status";
+	
+	
 
 	public List<ShipmentVO> shipmentTypeIdCode() {
 		List<ShipmentVO> listshipmentVO = new ArrayList<ShipmentVO>();
-		ResponseEntity<List<ShipmentVO>> response = restTemplate.exchange(partURL, HttpMethod.GET, null, new ParameterizedTypeReference<List<ShipmentVO>>() {
+		ResponseEntity<List<ShipmentVO>> response = restTemplate.exchange(SHIPMENTPARTURL, HttpMethod.GET, null, new ParameterizedTypeReference<List<ShipmentVO>>() {
 		});
 		listshipmentVO = response.getBody();
 		System.out.println(listshipmentVO);

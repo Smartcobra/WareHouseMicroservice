@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import in.jit.service.UomService;
 
 @RestController
 @RequestMapping("/rest/uom")
+@CrossOrigin
 public class UomRestController {
 
 	@Autowired
@@ -35,7 +38,7 @@ public class UomRestController {
 	public ResponseEntity<List<UomVO>> getUomToPart() {
 		UomVO uomVO = null;
 		List<UomVO> listUomVO = new ArrayList<UomVO>();
-		;
+		
 		int index = 0;
 
 		List<Uom> allUoms = service.getAllUoms();
@@ -59,6 +62,7 @@ public class UomRestController {
 
 	@GetMapping("/uomall")
 	public ResponseEntity<List<Uom>> getAllUom() {
+	System.out.println("UomRestController.getAllUom()");
 		List<Uom> list = service.getAllUoms();
 		return new ResponseEntity<List<Uom>>(list, HttpStatus.OK);
 

@@ -22,13 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.jit.exception.ResourceNotFoundException;
 import in.jit.model.Uom;
 import in.jit.model.UomVO;
 import in.jit.service.UomService;
 
 @RestController
 @RequestMapping("/rest/uom")
-@CrossOrigin
+@CrossOrigin("*")
 public class UomRestController {
 
 	@Autowired
@@ -118,16 +119,28 @@ public class UomRestController {
 		return resp;
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<String> updateUom(@RequestBody Uom uom) {
-		ResponseEntity<String> resp = null;
-		if (uom.getId() == null || !service.isUomExist(uom.getId())) {
-			resp = new ResponseEntity<String>("RECORD NOT EXIST IN DB", HttpStatus.BAD_REQUEST);
-		} else {
-			service.updateUom(uom);
-			resp = new ResponseEntity<String>("UOM WITH '" + uom.getId() + "' UPDATED", HttpStatus.OK);
-		}
-		return resp;
+	/*
+	 * @PutMapping("/update") public ResponseEntity<String> updateUom(@RequestBody
+	 * Uom uom) { ResponseEntity<String> resp = null; if (uom.getId() == null ||
+	 * !service.isUomExist(uom.getId())) { resp = new
+	 * ResponseEntity<String>("RECORD NOT EXIST IN DB", HttpStatus.BAD_REQUEST); }
+	 * else { service.updateUom(uom); resp = new ResponseEntity<String>("UOM WITH '"
+	 * + uom.getId() + "' UPDATED", HttpStatus.OK); } return resp; }
+	 */
+	
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Uom> updateUom(@PathVariable Integer id,
+			@Valid @RequestBody Uom uomDetails)throws ResourceNotFoundException{ 
+		System.out.println("UomRestController.updateUom()****" +uomDetails.getUomModel());
+		 //ResponseEntity<String> resp = null;
+		Uom uom = service.findById(id) 
+				.orElseThrow(() -> new ResourceNotFoundException("Uom not found for this id :: " + id));
+		System.out.println("Uom>>>>>>>>>>>>"   + uom.toString());
+		uom.setUomModel(uomDetails.getUomModel());
+		uom.setUomType(uomDetails.getUomType());
+		uom.setDescription(uomDetails.getDescription());
+		Uom updateUom = service.updateUom(uom);
+		return ResponseEntity.ok(updateUom);
 	}
 
 }

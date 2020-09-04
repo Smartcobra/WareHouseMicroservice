@@ -13,7 +13,7 @@ public interface UomService {
 
 	public Integer saveUom(Uom uom);
 	
-	public void updateUom(Uom uom);
+	public Uom updateUom(Uom uom);
 	
 	public void deleteUom(Integer id);
 	
@@ -26,6 +26,8 @@ public interface UomService {
 	public  Map<Integer,String> getUomIdAndModel();
 	
 	public Page<Uom> getAllUoms(Pageable pageable);
+
+	public Optional<Uom> findById(Integer uomId);
 	
 	
 	

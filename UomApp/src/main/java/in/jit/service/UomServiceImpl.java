@@ -31,8 +31,8 @@ public class UomServiceImpl implements UomService {
     
 	//@Transactional
 	@Override
-	public void updateUom(Uom uom) {
-		uomrepo.save(uom);
+	public Uom updateUom(Uom uom) {
+		return uomrepo.save(uom);
 
 	}
 
@@ -71,6 +71,12 @@ public class UomServiceImpl implements UomService {
 	@Override
 	public Page<Uom> getAllUoms(Pageable pageable) {
 		return uomrepo.findAll(pageable);
+	}
+
+
+	@Override
+	public Optional<Uom> findById(Integer uomId) { 
+		return uomrepo.findById(uomId);
 	}
 
 }

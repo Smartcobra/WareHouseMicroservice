@@ -49,6 +49,10 @@ public interface PurchaseOrderService {
 	
 	public List<PurchaseDtlDTO> getAllPurchaseOrderDtls();
 
+	public Optional<PurchaseOrder> findById(Integer id);
+
+	public PurchaseOrder update(PurchaseOrder po);
+
 	
 	
 	

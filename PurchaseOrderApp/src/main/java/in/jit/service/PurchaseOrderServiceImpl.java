@@ -223,6 +223,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		 return purchaseDTOList;
 	}
 
+	@Override
+	public Optional<PurchaseOrder> findById(Integer id) {
+		return repo.findById(id);
+	}
+
+	@Override
+	public PurchaseOrder update(PurchaseOrder po) {
+		return repo.save(po);
+	}
+
 	
 
 }

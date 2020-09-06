@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.jit.exception.ResourceNotFoundException;
 import in.jit.model.ShipmentType;
 import in.jit.model.ShipmentVO;
 import in.jit.service.ShipmentTypeService;
@@ -107,7 +108,7 @@ public class ShipmentTypeRestController {
 		}
 		return resp;
 	}
-
+ /*
 	@PutMapping("/update")
 	public ResponseEntity<String> updateShipmentType(@RequestBody ShipmentType shipment) {
 		ResponseEntity<String> resp = null;
@@ -118,6 +119,27 @@ public class ShipmentTypeRestController {
 			resp = new ResponseEntity<String>("UOM WITH '" + shipment.getId() + "' UPDATED", HttpStatus.OK);
 		}
 		return resp;
+	}
+	
+	*/
+	@PutMapping("/update/{id}")
+	public ResponseEntity<ShipmentType> updateUom(@PathVariable Integer id, 
+			@Valid @RequestBody ShipmentType shipmentTypeDetails) 
+			throws ResourceNotFoundException {
+		
+		// ResponseEntity<String> resp = null;
+		ShipmentType shipmentType = service.findById(id).
+									orElseThrow(() -> new ResourceNotFoundException("Shipmenttype not found for this id :: " + id));
+		
+		shipmentType.setShipmentCode(shipmentTypeDetails.getShipmentCode());
+		shipmentType.setShipmentGrade(shipmentTypeDetails.getShipmentGrade());
+		shipmentType.setEnableShipment(shipmentTypeDetails.getEnableShipment());
+		shipmentType.setShipmentMode(shipmentTypeDetails.getShipmentMode());
+		shipmentType.setDescription(shipmentTypeDetails.getDescription());
+		ShipmentType updateshipmentType = service.update(shipmentType);
+		
+		
+		return ResponseEntity.ok(updateshipmentType);
 	}
 
 }

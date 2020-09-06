@@ -88,4 +88,14 @@ public class ShipmentTypeServiceImpl implements ShipmentTypeService {
 		return shipmentList;
 	}
 
+	@Override
+	public Optional<ShipmentType> findById(Integer id) {
+		return repo.findById(id);
+	}
+
+	@Override
+	public ShipmentType update(ShipmentType sh) {
+		return repo.save(sh);
+	}
+
 }

@@ -21,5 +21,9 @@ public interface ShipmentTypeService {
 	public Optional<ShipmentType> getOneShipmentType(Integer id);
 	
 	public List<ShipmentVO> getShipmentIdAndCode();
+	
+	public Optional<ShipmentType> findById(Integer id);
+	
+	public ShipmentType update(ShipmentType sh);
 
 }

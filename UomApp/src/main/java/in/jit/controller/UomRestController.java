@@ -39,7 +39,7 @@ public class UomRestController {
 	public ResponseEntity<List<UomVO>> getUomToPart() {
 		UomVO uomVO = null;
 		List<UomVO> listUomVO = new ArrayList<UomVO>();
-		
+
 		int index = 0;
 
 		List<Uom> allUoms = service.getAllUoms();
@@ -63,7 +63,7 @@ public class UomRestController {
 
 	@GetMapping("/uomall")
 	public ResponseEntity<List<Uom>> getAllUom() {
-	System.out.println("UomRestController.getAllUom()");
+		System.out.println("UomRestController.getAllUom()");
 		List<Uom> list = service.getAllUoms();
 		return new ResponseEntity<List<Uom>>(list, HttpStatus.OK);
 
@@ -127,15 +127,13 @@ public class UomRestController {
 	 * else { service.updateUom(uom); resp = new ResponseEntity<String>("UOM WITH '"
 	 * + uom.getId() + "' UPDATED", HttpStatus.OK); } return resp; }
 	 */
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Uom> updateUom(@PathVariable Integer id,
-			@Valid @RequestBody Uom uomDetails)throws ResourceNotFoundException{ 
-		System.out.println("UomRestController.updateUom()****" +uomDetails.getUomModel());
-		 //ResponseEntity<String> resp = null;
-		Uom uom = service.findById(id) 
-				.orElseThrow(() -> new ResourceNotFoundException("Uom not found for this id :: " + id));
-		System.out.println("Uom>>>>>>>>>>>>"   + uom.toString());
+	public ResponseEntity<Uom> updateUom(@PathVariable Integer id, @Valid @RequestBody Uom uomDetails) throws ResourceNotFoundException {
+		System.out.println("UomRestController.updateUom()****" + uomDetails.getUomModel());
+		// ResponseEntity<String> resp = null;
+		Uom uom = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Uom not found for this id :: " + id));
+		System.out.println("Uom>>>>>>>>>>>>" + uom.toString());
 		uom.setUomModel(uomDetails.getUomModel());
 		uom.setUomType(uomDetails.getUomType());
 		uom.setDescription(uomDetails.getDescription());

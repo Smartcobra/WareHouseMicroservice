@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.jit.model.PurchaseDtl;
 import in.jit.model.PurchaseDtlDTO;
 import in.jit.model.PurchaseOrderVO;
 import in.jit.service.PurchaseOrderService;

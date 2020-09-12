@@ -22,6 +22,7 @@ public interface PurchaseOrderService {
 	public List<PurchaseOrder> getAllPurchaseOrders();
 	
 	public boolean isPurchaseOrderExist(Integer id);
+	
 	public boolean isPurchaseOrderCodeExists(String orderCode);
 	
 	public Map<Integer, String> getShipmentIdAndCode();
@@ -46,12 +47,15 @@ public interface PurchaseOrderService {
 	
 	public List<PurchaseOrderVO> getPurchaseOrderByStatus(String status);
 	
-	
 	public List<PurchaseDtlDTO> getAllPurchaseOrderDtls();
 
 	public Optional<PurchaseOrder> findById(Integer id);
 
 	public PurchaseOrder update(PurchaseOrder po);
+	
+	public boolean isPurchaseOrderDtlsExist(Integer id);
+	
+	
 
 	
 	

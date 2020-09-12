@@ -134,6 +134,8 @@ public class PurchaseOrderController {
 		m.addObject("obs", service.getAllPurchaseOrders());
 		return m;
 	}
+	
+	///screen-2S
 
 	@GetMapping("/dtls/{id}")
 	public String showPurchaseOrderDtls(@PathVariable Integer id, Model model) {
@@ -220,6 +222,8 @@ public class PurchaseOrderController {
 		}
 		return "redirect:../dtls/" + id;
 	}
+	
+	
 	
 	@GetMapping("/invoiceOrder/{id}")
 	public String invoiceOrder(@PathVariable Integer id)

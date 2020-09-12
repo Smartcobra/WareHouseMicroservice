@@ -233,6 +233,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return repo.save(po);
 	}
 
+	@Override
+	public boolean isPurchaseOrderDtlsExist(Integer id) {
+		return purchaseDtlRepo.existsById(id);
+	}
+
 	
 
 }

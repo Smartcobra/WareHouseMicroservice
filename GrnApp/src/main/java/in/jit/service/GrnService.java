@@ -34,4 +34,6 @@ public interface GrnService {
 
 	public void updateStatusByGrnDtlId(String status, Integer dtlId);
 
+
+
 }

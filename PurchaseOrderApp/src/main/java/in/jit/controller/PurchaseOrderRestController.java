@@ -10,12 +10,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -73,10 +71,7 @@ public class PurchaseOrderRestController {
 			pdto.setShipmentType(po.getShipmentType());
 			list.add(pdto);
 			
-			
 		}
-		
-				
 		return new ResponseEntity<List<PurchaseOrderDTO>>(list, HttpStatus.OK);
 
 	}
@@ -112,7 +107,7 @@ public class PurchaseOrderRestController {
 	}
 
 	@PostMapping("/insert")
-	public ResponseEntity<?> saveShipmentType(@Valid @RequestBody PurchaseOrder po, BindingResult errors) {
+	public ResponseEntity<?> savePurchaseorder(@Valid @RequestBody PurchaseOrder po, BindingResult errors) {
 		ResponseEntity<?> resp = null;
 		try {
 			if (errors.hasErrors()) {
@@ -239,6 +234,14 @@ public class PurchaseOrderRestController {
 			purchaseOrderService.updatePurchaseOrderStatus("ORDERED", id);
 		}
 		return ResponseEntity.ok("confrimed");
+	}
+	
+	@GetMapping("/invoiceOrder/{id}")
+	public ResponseEntity<String> invoiceOrder(@PathVariable Integer id)
+	{
+		System.out.println(">>>>>>>PurchaseOrderRestController.invoiceOrder()");
+		purchaseOrderService.updatePurchaseOrderStatus("INVOICED",id);
+		return ResponseEntity.ok("invoiceOrder");
 	}
 
 }

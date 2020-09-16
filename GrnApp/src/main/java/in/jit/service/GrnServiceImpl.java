@@ -126,7 +126,6 @@ public class GrnServiceImpl implements GrnService {
 
 	@Override
 	public List<GrnDtl> getAllDtlsByGrnId(Integer grnId) {
-		
 		return grnDtlRepo.getAllDtlsByGrnId(grnId);
 	}
 
@@ -137,6 +136,8 @@ public class GrnServiceImpl implements GrnService {
 		
 	}
 
+
+	
 	/*
 	 * @Override public Integer saveGrnDtl(GrnDtl dtl) { // TODO Auto-generated
 	 * method stub return null; }

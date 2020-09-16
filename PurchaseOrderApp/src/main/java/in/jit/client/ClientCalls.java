@@ -35,7 +35,7 @@ public class ClientCalls {
 	*/
 	
 	public static final String SHIPMENTPARTURL = "http://SHIPMENTTYPE-SERVICE/rest/shipmentcode";
-	public static final String WHUSERTYPEIDCODEURL = "http://WHUSERTYPE-SERVICE/rest/whusertypecode";
+	public static final String WHUSERTYPEIDCODEURL = "http://WHUSERTYPE-SERVICE/rest/whuser/whusertypecode";
 	public static final String PARTCODEBASECOSTURL = "http://PARTAPP-SERVICE/part/rest/partcodebasecost";
 	public static final String GRNSTATUSURL = "http://GRN-SERVICE/rest/grn/status";
 	

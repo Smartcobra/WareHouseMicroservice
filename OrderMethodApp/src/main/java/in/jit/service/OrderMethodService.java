@@ -11,8 +11,14 @@ public interface OrderMethodService {
 	public void updateOrderMethod(OrderMethod om);
 	
 	public void deleteOrderMethod(Integer id);
+	
 	public Optional<OrderMethod> getOneOrderMethod(Integer id);
 	
 	public List<OrderMethod> getAllOrderMethod();
+	
 	public boolean isOrderMethodExist(Integer id);
+	
+	public Optional<OrderMethod> findById(Integer id);
+	
+	public OrderMethod updateUom(OrderMethod ordermethod);
 }

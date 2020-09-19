@@ -47,4 +47,14 @@ public class OrderMethodServiceImpl implements OrderMethodService {
 		return repo.existsById(id);
 	}
 
+	@Override
+	public Optional<OrderMethod> findById(Integer id) {
+		return repo.findById(id);
+	}
+
+	@Override
+	public OrderMethod updateUom(OrderMethod ordermethod) {
+		return repo.save(ordermethod);
+	}
+
 }

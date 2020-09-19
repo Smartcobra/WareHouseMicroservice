@@ -88,6 +88,16 @@ public class WhUserTypeServiceImpl implements WhUserTypeService {
 		return whUserTypeVOList;
 	}
 
+	@Override
+	public Optional<WhUserType> findById(Integer id) {
+		return repo.findById(id) ;
+	}
+
+	@Override
+	public WhUserType update(WhUserType whUserType) {
+		return repo.save(whUserType);
+	}
+
 	/*
 	 * @Override public Map<Integer, String> getWhUserTypeIdAndCode(String userType)
 	 * { return repo.getWhUseTypeIdCode(userType) .stream()

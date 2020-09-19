@@ -34,6 +34,10 @@ public interface PartService {
 	
 	public List<PartVO> getPartCodeAndBaseCost();
 	
+	public Optional<Part> findById(Integer id);
+	
+	public Part update(Part newPart);
+	
 	
 	
 	

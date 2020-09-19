@@ -25,5 +25,9 @@ public interface WhUserTypeService {
 	
 	public List<WhUserTypeVO> getWhUserTypeIdAndCode();
 	
+	public Optional<WhUserType> findById(Integer id);
+	
+	public WhUserType update(WhUserType whUserType);
+	
 
 }

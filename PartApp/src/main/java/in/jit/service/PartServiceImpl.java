@@ -130,6 +130,16 @@ public class PartServiceImpl implements PartService {
 
 		return partVoList;
 	}
+
+	@Override
+	public Optional<Part> findById(Integer id) {
+		return repo.findById(id);
+	}
+
+	@Override
+	public Part update(Part newPart) {
+		return repo.save(newPart);
+	}
 	
 	
 }

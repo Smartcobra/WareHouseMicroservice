@@ -127,7 +127,6 @@ public class ShipmentTypeRestController {
 			@Valid @RequestBody ShipmentType shipmentTypeDetails) 
 			throws ResourceNotFoundException {
 		
-		// ResponseEntity<String> resp = null;
 		ShipmentType shipmentType = service.findById(id).
 									orElseThrow(() -> new ResourceNotFoundException("Shipmenttype not found for this id :: " + id));
 		

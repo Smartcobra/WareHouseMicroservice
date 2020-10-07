@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.jit.model.User;
-import in.jit.model.UserAuth;
 import in.jit.model.UserRequest;
 import in.jit.model.UserResponse;
 import in.jit.service.IUserService;
@@ -21,7 +19,7 @@ import in.jit.util.JWTUtil;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class AuthController {
 
 	@Autowired
 	private IUserService userService;
@@ -32,11 +30,6 @@ public class UserController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	@GetMapping("/validatelogin")
-	public UserAuth validateLogin() {
-		System.out.println("HomeController.validateLogin()");
-		return new UserAuth("User successfully authenticated");
-	}
 
 	@PostMapping("/save")
 	public ResponseEntity<String> saveUser(@RequestBody User user) {

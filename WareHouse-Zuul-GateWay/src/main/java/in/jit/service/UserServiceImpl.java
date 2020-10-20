@@ -1,5 +1,6 @@
 package in.jit.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import in.jit.model.RoleDTO;
 import in.jit.model.User;
 import in.jit.repo.UserRepository;
 
@@ -49,4 +51,17 @@ public class UserServiceImpl implements IUserService,UserDetailsService {
 				.collect(Collectors.toList()));
 	}
 
+	@Override
+	public List<String> findUserByRole(String username) {
+		System.out.println("UserServiceImpl.findUserByRole()>>>>>"+username);
+		return userRepo.findUserByRole(username);
+	}
+//	
+//	@Override
+//	public List<RoleDTO> findUserByRole(String username) {
+//		System.out.println("UserServiceImpl.findUserByRole()>>>>>"+username);
+//		return userRepo.findUserByRole(username);
+//	}
+
+	
 }
